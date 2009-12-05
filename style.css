@@ -1,0 +1,622 @@
+/*
+Theme Name: Marketplace
+Theme URI: http://shailan.com/wordpress/themes/marketplace
+Description: Options based theme. Includes full customization without writing any code. It allows you to add listing fields and it comes with a custom search widget. Theme is highly configurable, based on CSS and settings. For theme support <a href="http://shailan.com/contact">contact the author</a>.
+Version: 1.1
+Author: Matt Say
+Author URI: http://shailan.com/
+Tags: widgets, options page
+
+	The CSS, XHTML and design is released under Creative Commons Attribution-Noncommercial-Share Alike 3.0 Unported License:
+	http://creativecommons.org/licenses/by-nc-sa/3.0/
+	
+	(CC) BY NC SA
+	Some rights reserved.
+	
+*/ 
+
+#banners-main img.banner-image {width:600px; height:90px;}
+#banners-menu .widget img.banner-image {width:235px; height:70px; margin:2px;}
+
+img.sitelogo{ max-height:90px; border:none; float:left; }
+body { font-family:Arial, Helvetica, sans-serif; font-size:75%; color: #ddd; text-align: center;
+	background:#000;}
+#theme-credits{text-align:center;}
+#theme-credits p {font-size:0.8em;}
+
+#page { width:975px; background-color: transparent; border: none; margin: 15px auto;	padding: 0;	}
+#header { padding: 0; }
+#headerimg 	{ display:block; margin: 0px; width: 370px; height: 90px; overflow:hidden; float:left;}
+#headerimg .description { font-size: 1.2em; text-align: left; padding-left:15px;}
+#banners-main{float:right; width:600px; height:90px; overflow:hidden; }
+#banners-main .widget{float:left; height:90px; overflow:hidden;}
+/* #banners-main .shailan_banner_widget img {width:600px; height:90px;} */
+#banners-menu{ width:100%; padding:0px; clear:both;margin-top:2px; margin-left:1px; margin-bottom:2px;}
+#banners-menu .widget {margin-right:1px;margin-left:1px; float:left; width:241px; height:75px; text-align:center; background:url('images/fadin-gray.gif') repeat-x; }
+#banners-menu .widget img { margin:auto auto; }
+ul.top-menu{ margin:0px auto; padding:0px; width:560px; }
+ul.top-menu li{ display:block; padding: 5px 10px 0px 10px; text-transform:uppercase; float:left; }
+ul.top-menu li.current_page_item{ font-weight:bold; color:#ddd; }
+ul.top-menu li.current_page_item a { font-weight:bold; color:#ddd; }
+
+#content { font-size: 1.2em; float:left; width:560px; margin:3px 10px; padding:2px 10px ; background-color:#333;}
+.entry div.controls {text-align:right; font-size:0.7em;}
+.entry table.information {border:1px solid #444;}
+
+.ms-generator-container { display:block; clear:none; }
+.ms-generator-container ul.ms-generator-list { text-indent:0px; display:block; float:left;list-style-type:none; padding:0px; margin:5px; /* border-top:1px solid #ccc; */}
+.ms-generator-container ul.ms-generator-list li { padding:3px; margin:0px;}
+.ms-generator-container ul li:before {
+	content: "";
+	}
+
+#sidebar-left{ float:left; width:220px; border:0px; margin:10px 10px 10px 2px; text-align:left;}
+#sidebar-left .widget h2 { font-size:1.2em; margin:0.3em 0px; }
+#sidebar-left .widget{width:225px; overflow:hidden; margin:0px; margin-bottom:2px; }
+
+.custom_search {background:#212121 url('images/fadin-gray.gif') repeat-x top left; padding:5px;}
+.custom_search input, select{ border:1px solid #000; background:corn; padding:3px; font-size:1.2em; font-family:Georgia, Arial, Helvetica, sans-serif; width:100px;}
+.custom_search input[type=submit]{background:#ff9933;}
+
+#sidebar .searchform-input-wrapper input,
+.searchform-input-wrapper input,
+.searchform-input-wrapper select{
+    width: 100px;
+}
+
+#sidebar-right{ float:right; width:120px; background:#333; margin:3px 0px; padding:10px; text-align:center; }
+#sidebar-right .widget h2 { font-size:1.2em; margin:0.3em 0px; }
+#sidebar-right .widget{ width:120px; overflow:hidden; margin:0px auto; margin-bottom:2px; }
+
+.mp-featured-products {}
+.mp-featured-products h2 {}
+.mp-featured-products ul.image-list { margin:px; padding:0px;}
+.mp-featured-products ul.image-list li{ display: block; margin:5px 0px; padding:0px;}
+.mp-featured-products ul.image-list li img{ border:1px solid #000; width:118px;}
+
+.mp-random-products {}
+.mp-random-products h2 {}
+.mp-random-products ul.image-list { margin:px; padding:0px;}
+.mp-random-products ul.image-list li{ display: block; margin:5px 0px; padding:0px;}
+.mp-random-products ul.image-list li img{ border:1px solid #000; width:118px;}
+
+.thread-alt {
+	background-color: #f8f8f8;
+}
+.thread-even {
+	background-color: white;
+}
+.depth-1 { border: 1px solid #ddd; }
+.even, .alt { border-left: 1px solid #ddd; }
+
+#footer { background: transparent; border: none; padding: 0; margin: 0 auto;	clear: both; }
+#footer p { margin: 0; padding: 10px 0; text-align: center; }
+
+small { font-size: 0.9em; line-height: 1.5em; }
+h1, h2, h3 { font-weight: bold; }
+h1 { font-size: 3.5em; text-align: left; }
+h2 { font-size: 1.6em; }
+h2.pagetitle { font-size: 1.6em; }
+#sidebar-left h2, #sidebar-right h2 { font-size: 1.2em; }
+
+h3 {
+	font-size: 1.3em;
+	}
+
+h1, h1 a, h1 a:hover, h1 a:visited, #headerimg .description {
+	text-decoration: none;
+	color: white;
+	}
+
+h2, h2 a, h2 a:visited, h3, h3 a, h3 a:visited {
+	color: #666;
+	}
+
+h2, h2 a, h2 a:hover, h2 a:visited, h3, h3 a, h3 a:hover, h3 a:visited, #sidebar h2, #wp-calendar caption, cite {
+	text-decoration: none;
+	}
+
+.entry p a:visited {
+	color: #b85b5a;
+	}
+
+.sticky {
+	background: #f7f7f7;
+	padding: 0 10px 10px;
+	}
+.sticky h2 {
+	padding-top: 10px;
+	}
+
+.commentlist li, #commentform input, #commentform textarea {
+	font: 0.9em;
+	}
+.commentlist li ul li {
+	font-size: 1em;
+}
+
+.commentlist li {
+	font-weight: bold;
+}
+
+.commentlist li .avatar { 
+	float: right;
+	border: 1px solid #eee;
+	padding: 2px;
+	background: #fff;
+	}
+
+.commentlist cite, .commentlist cite a {
+	font-weight: bold;
+	font-style: normal;
+	font-size: 1.1em;
+	}
+
+.commentlist p {
+	font-weight: normal;
+	line-height: 1.5em;
+	text-transform: none;
+	}
+
+#commentform p {
+	}
+
+.commentmetadata {
+	font-weight: normal;
+	}
+
+#sidebar {
+	font: 1em;
+	}
+
+small, #sidebar ul ul li, #sidebar ul ol li, .nocomments, .postmetadata, blockquote, strike {
+	color: #777;
+	}
+
+code {
+	font: 1.1em 'Courier New', Courier, Fixed;
+	}
+
+acronym, abbr, span.caps
+{
+	font-size: 0.9em;
+	letter-spacing: .07em;
+	}
+
+a, h2 a:hover, h3 a:hover {
+	color: #06c;
+	text-decoration: none;
+	}
+
+a:hover {
+	color: #147;
+	text-decoration: underline;
+	}
+
+#wp-calendar #prev a, #wp-calendar #next a {
+	font-size: 9pt;
+	}
+
+#wp-calendar a {
+	text-decoration: none;
+	}
+
+#wp-calendar caption {
+	font: bold 1.3em;
+	text-align: center;
+	}
+
+#wp-calendar th {
+	font-style: normal;
+	text-transform: capitalize;
+	}
+/* End Typography & Colors */
+
+
+
+/* Begin Structure */
+body {
+	margin: 0 0 20px 0;
+	padding: 0;
+	}
+
+.post {
+	margin: 0 0 10px;
+	text-align: justify;
+	}
+
+.post hr {
+	display: block;
+	}
+
+.postmetadata {
+	clear: both;
+}
+
+.clear { clear: both; }
+
+
+
+
+/*	Begin Headers */
+h1 {
+	padding-top: 10px;
+	padding-left:10px;
+	margin: 0;
+	}
+
+h2 {
+	margin: 30px 0 0;
+	}
+
+h2.pagetitle {
+	margin-top: 10px;
+	text-align: left;
+}
+
+#sidebar h2 {
+	margin: 5px 0 0;
+	padding: 0;
+	}
+
+h3 {
+	padding: 0;
+	margin: 30px 0 0;
+	}
+
+h3.comments {
+	padding: 0;
+	margin: 40px auto 20px ;
+	}
+/* End Headers */
+
+
+
+/* Begin Images */
+p img {
+	padding: 0;
+	max-width: 100%;
+	}
+
+/*	Using 'class="alignright"' on an image will (who would've
+	thought?!) align the image to the right. And using 'class="centered',
+	will of course center the image. This is much better than using
+	align="center", being much more futureproof (and valid) */
+
+img.centered {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	}
+
+img.alignright {
+	padding: 4px;
+	margin: 0 0 2px 7px;
+	display: inline;
+	}
+
+img.alignleft {
+	padding: 4px;
+	margin: 0 7px 2px 0;
+	display: inline;
+	}
+
+.alignright {
+	float: right;
+	}
+
+.alignleft {
+	float: left;
+	}
+/* End Images */
+
+
+
+/* Begin Lists
+
+	Special stylized non-IE bullets
+	Do not work in Internet Explorer, which merely default to normal bullets. */
+
+html>body .entry ul {
+	margin-left: 0px;
+	padding: 0 0 0 30px;
+	list-style: none;
+	padding-left: 10px;
+	text-indent: -10px;
+	}
+
+html>body .entry li {
+	margin: 7px 0 8px 10px;
+	}
+
+.entry ul li:before, #sidebar ul ul li:before {
+	content: "\00BB \0020";
+	}
+
+.entry ol {
+	padding: 0 0 0 35px;
+	margin: 0;
+	}
+
+.entry ol li {
+	margin: 0;
+	padding: 0;
+	}
+
+.postmetadata ul, .postmetadata li {
+	display: inline;
+	list-style-type: none;
+	list-style-image: none;
+	}
+
+#sidebar ul, #sidebar ul ol {
+	margin: 0;
+	padding: 0;
+	}
+
+#sidebar ul li {
+	list-style-type: none;
+	list-style-image: none;
+	margin-bottom: 15px;
+	}
+
+#sidebar ul p, #sidebar ul select {
+	margin: 5px 0 8px;
+	}
+
+#sidebar ul ul, #sidebar ul ol {
+	margin: 5px 0 0 10px;
+	}
+
+#sidebar ul ul ul, #sidebar ul ol {
+	margin: 0 0 0 10px;
+	}
+
+ol li, #sidebar ul ol li {
+	list-style: decimal outside;
+	}
+
+#sidebar ul ul li, #sidebar ul ol li {
+	margin: 3px 0 0;
+	padding: 0;
+	}
+/* End Entry Lists */
+
+
+
+/* Begin Form Elements */
+#searchform {
+	margin: 10px auto;
+	padding: 5px 3px;
+	text-align: center;
+	}
+
+#sidebar #searchform #s {
+	width: 108px;
+	padding: 2px;
+	}
+
+#sidebar #searchsubmit {
+	padding: 1px;
+	}
+
+.entry form { /* This is mainly for password protected posts, makes them look better. */
+	text-align:center;
+	}
+
+select {
+	width: 130px;
+	}
+
+#commentform input {
+	width: 170px;
+	padding: 2px;
+	margin: 5px 5px 1px 0;
+	}
+
+#commentform {
+	margin: 5px 10px 0 0;
+	}
+#commentform textarea {
+	width: 100%;
+	padding: 2px;
+	}
+#respond:after {
+		content: "."; 
+	    display: block; 
+	    height: 0; 
+	    clear: both; 
+	    visibility: hidden;
+	}
+#commentform #submit {
+	margin: 0 0 5px auto;
+	float: right;
+	}
+/* End Form Elements */
+
+
+
+/* Begin Comments*/
+.alt {
+	margin: 0;
+	padding: 10px;
+	}
+
+.commentlist {
+	padding: 0;
+	text-align: justify;
+	}
+
+.commentlist li {
+	margin: 15px 0 10px;
+	padding: 5px 5px 10px 10px;
+	list-style: none;
+
+	}
+.commentlist li ul li { 
+	margin-right: -5px;
+	margin-left: 10px;
+}
+
+.commentlist p {
+	margin: 10px 5px 10px 0;
+}
+.children { padding: 0; }
+
+#commentform p {
+	margin: 5px 0;
+	}
+
+.nocomments {
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	}
+
+.commentmetadata {
+	margin: 0;
+	display: block;
+	}
+/* End Comments */
+
+
+
+/* Begin Sidebar */
+#sidebar
+{
+	padding: 20px 0 10px 0;
+	margin-left: 545px;
+	width: 190px;
+	}
+
+#sidebar form {
+	margin: 0;
+	}
+/* End Sidebar */
+
+
+
+/* Begin Calendar */
+#wp-calendar {
+	empty-cells: show;
+	margin: 10px auto 0;
+	width: 155px;
+	}
+
+#wp-calendar #next a {
+	padding-right: 10px;
+	text-align: right;
+	}
+
+#wp-calendar #prev a {
+	padding-left: 10px;
+	text-align: left;
+	}
+
+#wp-calendar a {
+	display: block;
+	}
+
+#wp-calendar caption {
+	text-align: center;
+	width: 100%;
+	}
+
+#wp-calendar td {
+	padding: 3px 0;
+	text-align: center;
+	}
+
+#wp-calendar td.pad:hover { /* Doesn't work in IE */
+	background-color: #fff; }
+/* End Calendar */
+
+
+
+/* Begin Various Tags & Classes */
+acronym, abbr, span.caps {
+	cursor: help;
+	}
+
+acronym, abbr {
+	border-bottom: 1px dashed #999;
+	}
+
+blockquote {
+	margin: 15px 30px 0 10px;
+	padding-left: 20px;
+	border-left: 5px solid #ddd;
+	}
+
+blockquote cite {
+	margin: 5px 0 0;
+	display: block;
+	}
+
+.center {
+	text-align: center;
+	}
+
+.hidden {
+	display: none;
+	}
+	
+.screen-reader-text {
+     position: absolute;
+     left: -1000em;
+}
+
+hr {
+	display: none;
+	}
+
+a img {
+	border: none;
+	}
+
+.navigation {
+	display: block;
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 60px;
+	}
+/* End Various Tags & Classes*/
+
+
+
+/* Captions */
+.aligncenter,
+div.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.wp-caption {
+	border: 1px solid #ddd;
+	text-align: center;
+	background-color: #f3f3f3;
+	padding-top: 4px;
+	margin: 10px;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.wp-caption img {
+	margin: 0;
+	padding: 0;
+	border: 0 none;
+}
+
+.wp-caption p.wp-caption-text {
+	font-size: 11px;
+	line-height: 17px;
+	padding: 0 4px 5px;
+	margin: 0;
+}
+/* End captions */
+
+
+

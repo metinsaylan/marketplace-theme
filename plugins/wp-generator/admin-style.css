@@ -1,0 +1,104 @@
+#stage {
+	clear: left;
+	font-family: verdana,sans-serif;
+	color: #444;
+	margin: 0pt;
+	font-size: 11px;
+}
+
+/* Drag */
+
+#dragSpace {
+	width:233px;
+	float: left;
+	padding-top: 20px;
+}
+
+#dragList {
+	width:195px;
+}
+
+#dragList DIV, .itemMove {
+  padding: 0px 0px 0px 35px;
+  margin: 0px 0px 5px 0px;
+  line-height: 26px;
+  width: 153px;
+  cursor: default;
+  height: 26px;
+}
+
+#dragList #dragTitle {
+  padding: 4px 0px 0px 35px;
+  font-weight: bold;
+  background: url('image/head.gif') no-repeat;
+  height: 42px;
+  line-height: 18px;
+}
+
+
+/*******************************************************************/
+
+.text{background: url('image/items.gif') no-repeat;}
+.url{background:  url('image/items.gif') no-repeat;}
+.image{background:  url('image/items.gif') no-repeat;}
+.textarea{background:  url('image/items.gif') no-repeat;}
+
+
+/* Main Container */
+
+
+#mainContainer {
+  width: 562px;
+  float: left;
+  font-family: Arial;
+}
+
+#workSpace {
+	width:510px;
+	float: left;
+}
+
+#tabs {
+  height: 20px;
+  width: 580px;
+}
+
+#pList {
+	background: #D7E2E8;
+	padding: 0px 14px 5px;
+}
+
+
+.finalList {
+	padding: 8px 0px 8px 0;
+	background: #F2F6F9;
+	border: 1px solid #D0D9E0;
+	min-height:400px;
+	height:auto !important;
+	height:400px;  
+	font-family: Verdana;
+}
+
+
+.eHelp , .debug{
+   width: 550px;
+   background: #FFFFFF;
+   background-position: 20px 40px; 
+   border: 1px solid #D0D9E0;
+   margin: 10px 20px 15px 20px;
+   padding: 10px 10px 5px 10px;
+}
+
+.eHelp H3 {
+  color: #444;
+  font-weight:bold;
+}
+
+.clear{
+	clear:both;
+}
+
+.debug{display:none;}
+
+
+

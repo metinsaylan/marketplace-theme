@@ -1,0 +1,17 @@
+/******************************/
+/*  MS WP-GENERATOR STYLES    */
+/******************************/
+/*
+*  Author: Matt Say (http://pilastik.net)
+*  
+*  Basic style fixes for the MS WP-Generator.
+*  Add your styles using following template:
+*     .msg_YOUR_FIELD_NAME {}
+*/ 
+
+.ms-generator-container { display:block; clear:both; }
+.ms-generator-container ul.ms-generator-list { text-indent:0px; display:block; float:left;list-style-type:none; padding:0px; margin:5px; }
+.ms-generator-container ul.ms-generator-list li { /*display:block; float:left;*/ padding:3px; margin:0px;}
+.ms-generator-container ul li:before {
+	content: "";
+	}
