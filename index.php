@@ -10,7 +10,7 @@ get_header(); ?>
 
 	<?php if (have_posts()) : ?>
 	
-	<h2 class="pagetitle">Latest Additions</h2>
+	<h2 class="page-title">Latest Additions</h2>
 
 		<?php while (have_posts()) : the_post(); ?>
 

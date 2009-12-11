@@ -43,7 +43,9 @@
 		
 	<?php } ?>
 </div>
-	<div class="menu">
+
+<div id="content-wrapper">
+<div class="menu">
 		<ul class="top-menu">
 		<li class="<?php if ( is_front_page() && !is_paged() ): ?>current_page_item<?php else: ?>page_item<?php endif; ?> blogtab"><a href="<?php echo get_option('home'); ?>/"><?php _e('Home'); ?></a></li>
 		<?php 
@@ -63,3 +65,4 @@
 	?>		
 		</ul>
 	</div>
+

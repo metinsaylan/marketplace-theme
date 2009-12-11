@@ -3,6 +3,9 @@
  * Marketplace right sidebar.
  */
 ?>
+
+</div>
+
 	<div id="sidebar-right" role="complementary">
 			<?php if(!dynamic_sidebar('sidebar-right')){ ?>
 			
