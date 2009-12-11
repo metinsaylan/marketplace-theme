@@ -58,8 +58,17 @@ class mp_featured_products_widget extends WP_Widget {
         ?>
             <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label></p>
 			
-			<p><label for="<?php echo $this->get_field_id('category'); ?>"><?php _e('Category:'); ?> <input class="widefat" id="<?php echo $this->get_field_id('category'); ?>" name="<?php echo $this->get_field_name('category'); ?>" type="text" value="<?php echo $category; ?>" /></label><br /> 
-		<small>Enter category name here (Eg. Special)</small></p>
+			<p><label for="<?php echo $this->get_field_id('category'); ?>"><?php _e('Category:'); ?><select name="<?php echo $this->get_field_name('category'); ?>" id="<?php echo $this->get_field_id('category'); ?>" > 		
+ <?php 
+  $categories = get_categories(''); 
+  foreach ($categories as $cat) {  
+  	$option = '<option value="'.$cat->category_nicename .'" '. ( $cat->category_nicename == $instance['category'] ? ' selected="selected"' : '' ) .'>';
+	$option .= $cat->cat_name;
+	$option .= '</option>\n';
+	echo $option;
+  }
+ ?>
+</select></label></p>
 			
 			<p><label for="<?php echo $this->get_field_id('count'); ?>"><?php _e('Number of items:'); ?> <input class="" size="4" id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>" type="text" value="<?php echo $count; ?>" /></label><br /> 
 		<small>Enter number of posts to be displayed.</small></p>
