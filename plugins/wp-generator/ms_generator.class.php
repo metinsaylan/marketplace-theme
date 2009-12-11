@@ -202,7 +202,6 @@ if (!class_exists("wpGenerator")) {
 
 			$r = wp_parse_args( $args, $defaults );
 			extract($r, EXTR_SKIP);
-			///$return = '';
 			
 			// Option names
 			$show_labels_name = 'show_labels';
@@ -226,7 +225,6 @@ if (!class_exists("wpGenerator")) {
 			if( $rows > 0 ){
 				while( $msg_field = mysql_fetch_array($db_process) ){
 					$meta_value = wpGenerator::get_generator_field($post->ID, $msg_field['name']);
-					//echo "field value:".$meta_value;
 					
 				  if(strlen($meta_value)!=0 || ($list_empty && $show_labels)){
 					if($meta_value==''){$meta_value="-";}
@@ -242,10 +240,8 @@ if (!class_exists("wpGenerator")) {
 				  }
 				}
 			} else { echo "No fields exist."; }
-			//}
 			
 			echo "</ul></div>";
-			//echo "generating..";
 		   
 		   return true;
 		}
