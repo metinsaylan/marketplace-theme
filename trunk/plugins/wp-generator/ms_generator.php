@@ -41,7 +41,6 @@ define('MSG_CONTROLS', $ctrls);
 
 // Define wpGenerator Class
 include_once( 'ms_generator.class.php' );
-include_once( 'ms_generator.SearchWidget.php' );
 
 // Create instance 
 if (class_exists(MSG_CLASSNAME)) { $msGeneratorInstance = new wpGenerator(); } 
