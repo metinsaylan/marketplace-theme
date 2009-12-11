@@ -21,7 +21,7 @@ Text Domain: wp-custom-fields-search
 		}
 		function __construct($params=array()){
 			$this->loadTranslations();
-			parent::__construct(__('MP Product Search','wp-custom-fields-search'),$params);
+			parent::__construct(__('MP Product','wp-custom-fields-search'),$params);
 			add_action('admin_print_scripts', array(&$this,'print_admin_scripts'), 90);
 			add_action('admin_menu', array(&$this,'plugin_menu'), 90);
 			add_filter('the_content', array(&$this,'process_tag'),9);
