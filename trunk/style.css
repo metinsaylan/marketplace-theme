@@ -21,7 +21,7 @@ Tags: widgets, options page
 img.sitelogo{ max-height:90px; border:none; float:left; }
 body { font-family:Arial, Helvetica, sans-serif; font-size:75%; color: #ddd; text-align: center;
 	background:#000;}
-#theme-credits{text-align:center;}
+#theme-credits{ text-align:center; clear:both;}
 #theme-credits p {font-size:0.8em;}
 
 #page { width:975px; background-color: transparent; border: none; margin: 15px auto;	padding: 0;	}
@@ -34,7 +34,8 @@ body { font-family:Arial, Helvetica, sans-serif; font-size:75%; color: #ddd; tex
 #banners-menu{ width:100%; padding:0px; clear:both;margin-top:2px; margin-left:1px; margin-bottom:2px;}
 #banners-menu .widget {margin-right:1px;margin-left:1px; float:left; width:241px; height:75px; text-align:center; background:url('images/fadin-gray.gif') repeat-x; }
 #banners-menu .widget img { margin:auto auto; }
-ul.top-menu{ margin:0px auto; padding:0px; width:560px; }
+
+ul.top-menu{ margin:0px auto; padding:3px; width:560px; }
 ul.top-menu li{ display:block; padding: 5px 10px 0px 10px; text-transform:uppercase; float:left; }
 ul.top-menu li.current_page_item{ font-weight:bold; color:#ddd; }
 ul.top-menu li.current_page_item a { font-weight:bold; color:#ddd; }
@@ -70,15 +71,21 @@ ul.top-menu li.current_page_item a { font-weight:bold; color:#ddd; }
 
 .mp-featured-products {}
 .mp-featured-products h2 {}
-.mp-featured-products ul.image-list { margin:px; padding:0px;}
+.mp-featured-products ul.image-list { margin:0px; padding:0px;}
 .mp-featured-products ul.image-list li{ display: block; margin:5px 0px; padding:0px;}
 .mp-featured-products ul.image-list li img{ border:1px solid #000; width:118px;}
 
 .mp-random-products {}
 .mp-random-products h2 {}
-.mp-random-products ul.image-list { margin:px; padding:0px;}
+.mp-random-products ul.image-list { margin:0px; padding:0px;}
 .mp-random-products ul.image-list li{ display: block; margin:5px 0px; padding:0px;}
 .mp-random-products ul.image-list li img{ border:1px solid #000; width:118px;}
+
+#footer .mp-random-products { clear:both; display: block; }
+#footer .mp-random-products h2 { display: block; float:left; margin-right:5px; }
+#footer .mp-random-products ul.image-list { margin:0px; padding:0px;}
+#footer .mp-random-products ul.image-list li{ display: inline block; float:left; margin:5px 0px; padding:0px;}
+#footer .mp-random-products ul.image-list li img{ border:1px solid #000; width:118px;}
 
 .thread-alt {
 	background-color: #f8f8f8;
@@ -96,7 +103,7 @@ small { font-size: 0.9em; line-height: 1.5em; }
 h1, h2, h3 { font-weight: bold; }
 h1 { font-size: 3.5em; text-align: left; }
 h2 { font-size: 1.6em; }
-h2.pagetitle { font-size: 1.6em; }
+h2.page-title, h2.post-title { font-size: 1.6em; }
 #sidebar-left h2, #sidebar-right h2 { font-size: 1.2em; }
 
 h3 {
@@ -249,7 +256,7 @@ h2 {
 	margin: 30px 0 0;
 	}
 
-h2.pagetitle {
+h2.page-title, h2.post-title {
 	margin-top: 10px;
 	text-align: left;
 }
@@ -618,5 +625,10 @@ div.aligncenter {
 }
 /* End captions */
 
+#page{border:1px solid #000;}
+#header{border:1px solid #0f0;}
+#content{border:1px solid #00f;}
+#sidebar{border:1px solid #f00;}
+#footer{border:1px solid #0ff;}
 
 

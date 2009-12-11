@@ -11,22 +11,13 @@ get_header();
 
 	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
-		<div class="navigation">
-			<div class="alignleft"><?php previous_post_link('&laquo; %link') ?></div>
-			<div class="alignright"><?php next_post_link('%link &raquo;') ?></div>
-		</div>
-
 		<div <?php post_class() ?> id="post-<?php the_ID(); ?>">
-			<h2><?php the_title(); ?></h2>
+			<h2 class="post-title"><?php the_title(); ?></h2>
 
 			<div class="entry">
 				<div class="controls"><?php edit_post_link('Edit', '', ''); ?></div>
-				<table class="information" width="100%" style="padding:10px;"><tr><td colspan="2">
-					<?php the_title(); ?>
-				</td></tr><tr><td>
-					<?php if(function_exists('ms_generator')){ ms_generator(); } else { 
-						echo "MS WP-Generator must be installed and activated for listings to work.";
-					}?>
+				<table class="information" width="100%" style="padding:10px;"><tr><td>
+					<?php if(function_exists('ms_generator')){ ms_generator(); } ?>
 				</td><td width="120">
 					<a href="<?php the_permalink() ?>" title="Click on image for details"><img src="<?php echo shailan::get_first_image(); ?>" width="120" height="100" /></a>
 				</td></tr>
