@@ -12,16 +12,6 @@
 	
 */
 
-/**
-
-	== CHANGELOG ==
-	* 0.1 - First release.
-
-	== TODO == 
-	* - - - 
-
-*/
-
 $shailanMP_theme_data = get_theme_data(TEMPLATEPATH.'/style.css');
 
 define('MSMP_TITLE','MarketPlace');
