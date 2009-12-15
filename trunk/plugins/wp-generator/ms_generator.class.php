@@ -206,16 +206,18 @@ if (!class_exists("wpGenerator")) {
 			// Option names
 			$show_labels_name = 'show_labels';
 			$list_empty_name = 'list_empty';
+			$style_tag = 'shailan_msgen_style';
 	
 			// Read options 
 			$show_labels = get_option($show_labels_name);
 			$list_empty = get_option($list_empty_name);
+			$style = get_option($style_tag);
 			
 			$show_labels = (bool) ($show_labels == 'on');
 			
-			if($style=='list'){
+			if($style=='List'){
 				echo "<div class='ms-generator-container'><ul class='ms-generator-list'>";
-			} elseif($style=='table') {
+			} elseif($style=='Table') {
 				echo "<div class='ms-generator-container'><table class='ms-generator-list'>";
 			} else {			
 				echo "<span class='ms-generator-container'>";
