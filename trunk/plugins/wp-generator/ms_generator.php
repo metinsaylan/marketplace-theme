@@ -52,7 +52,7 @@ if (isset($msGeneratorInstance)) {
 	add_action('edit_post', array(&$msGeneratorInstance, 'saveMeta' ) );
 	add_action('save_post', array(&$msGeneratorInstance, 'saveMeta' ) );
 	add_action('publish_post', array(&$msGeneratorInstance, 'saveMeta' ) );
-	add_action('wp_head', array(&$msGeneratorInstance, 'getStylesheet'));
+	//add_action('wp_head', array(&$msGeneratorInstance, 'getStylesheet'));
 	add_action('ms_gen', array(&$msGeneratorInstance, 'writeFields' ) );
 	
 }

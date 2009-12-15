@@ -258,7 +258,7 @@ if (!class_exists("wpGenerator")) {
 		}
 		
 		function getStylesheet(){
-			echo '<link rel="stylesheet" href="' . MSG_FULLPATH . 'style.css" type="text/css">';
+			//echo '<link rel="stylesheet" href="' . MSG_FULLPATH . 'style.css" type="text/css">';
 		}
 		
 		// Prints out the options page where you can edit options for the plugin.
