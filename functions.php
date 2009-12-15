@@ -68,6 +68,6 @@ include_once('widgets/shailan.php');
 include_once('plugins/wp-custom-fields-search/wp-custom-fields-search.php');
 include_once('plugins/wp-generator/ms_generator.php');
 
-shailan_MarketPlace::init();
+marketplace::init();
 
 ?>

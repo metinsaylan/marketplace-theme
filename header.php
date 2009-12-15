@@ -23,7 +23,7 @@
 <div id="page">
 <div id="header" role="banner">
 	<div id="headerimg">
-		<?php shailan_marketPlace::logo(); ?>
+		<?php marketplace::logo(); ?>
 	</div>
 	<div id="banners-main">
 		<?php if(!dynamic_sidebar('header-widgets-top')){
