@@ -67,10 +67,9 @@ include_once('app/marketplace.php');
 /** 
  * Widgets
  */ 
-include_once('widgets/shailan.BannerWidget.php');
-include_once('widgets/mp_featured_products_widget.php');
-include_once('widgets/mp_random_products_widget.php');
-include_once('widgets/shailan.php');
+include_once('widgets/mp_banner.php');
+include_once('widgets/mp_featured_products.php');
+include_once('widgets/mp_random_products.php');
 
 /** 
  * Plugins
