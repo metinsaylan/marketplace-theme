@@ -27,7 +27,7 @@
 	</div>
 	<div id="banners-main">
 		<?php if(!dynamic_sidebar('header-widgets-top')){
-			echo '<img src="'.get_bloginfo('template_directory').'/images/top-banner.png" width="600" height="90" />';
+			echo '<a href="'.marketplace::get_advertise_url().'" alt="Click!"><img src="'.get_bloginfo('template_directory').'/images/top-banner.png" width="600" height="90" /></a>';
 		}; ?>
 	</div>
 		<div class="clear"></div>
