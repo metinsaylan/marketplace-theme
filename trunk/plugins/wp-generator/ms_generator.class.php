@@ -226,6 +226,14 @@ if (!class_exists("wpGenerator")) {
 			$rows = mysql_num_rows($db_process);
 			if( $rows > 0 ){
 				while( $msg_field = mysql_fetch_array($db_process) ){
+				
+				if(strlen($msg_field['name'])==0){ // If name is empty delete from database.
+					$position = $msg_field['position'];				
+					$sql_delete = "Delete from ".MSG_CONTROLS." 
+					 where position = '$position' ";
+					mysql_query($sql_delete);
+				}
+				
 					$meta_value = wpGenerator::get_generator_field($post->ID, $msg_field['name']);
 					
 				  if(strlen($meta_value)!=0 || ($list_empty && $show_labels)){

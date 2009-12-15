@@ -14,7 +14,7 @@
 </div>
 
 <div id="theme-credits">
-	<p>Marketplace <?php shailan_marketPlace::version(); ?> brought to you by <a href="http://shailan.com">Shailan.com</a></p>
+	<p>Marketplace <?php marketplace::version(); ?> brought to you by <a href="http://shailan.com">Shailan.com</a></p>
 </div>
 
 </div>

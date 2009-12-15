@@ -15,34 +15,33 @@
 $shailanMP_theme_data = get_theme_data(TEMPLATEPATH.'/style.css');
 
 define('MSMP_TITLE','MarketPlace');
-define('MSMP_CLASSNAME','shailan_marketPlace');
+define('MSMP_CLASSNAME','marketplace');
 define('MSMP_VERSION', trim($shailanMP_theme_data['Version']));
-define('MSMP_DOMAIN','marketplace');
 
 /* Define Options Hash */
 define('MSMP_OPTION_VERSION', 'shailanMP_version');
 define('MSMP_OPTION_LOGO', 'shailanMP_logo');
 
-class shailan_marketPlace{
+class marketplace{
 
 	function init(){
 		// Load the localisation text
-		load_theme_textdomain(MSMP_DOMAIN);
+		load_theme_textdomain('marketplace');
 		
 		// Check installed version, upgrade if needed
 		$MSMP_version = get_option(MSMP_OPTION_VERSION);
 
 		if ( $MSMP_version === false )
-			shailan_marketPlace::install();
+			marketplace::install();
 		elseif ( version_compare($MSMP_version, MSMP_VERSION, '<') )
-			shailan_marketPlace::upgrade($MSMP_version);
+			marketplace::upgrade($MSMP_version);
 			
 		DB_CustomSearch_Widget::init();
 		wpGenerator::init();
 		
 			
 		// Register our scripts with script loader
-		//  shailan_marketPlace::register_scripts();
+		//  marketplace::register_scripts();
 	}
 	
 	function print_styles(){ 
@@ -50,21 +49,28 @@ class shailan_marketPlace{
 	}
 	
 	function add_options_menu(){
-		//$page = add_theme_page(__('Marketplace Options',), __('Marketplace Options',MSMP_DOMAIN), 'edit_themes', 'shailan-mp-options', );
+		//$page = add_theme_page(__('Marketplace Options',), __('Marketplace Options','marketplace'), 'edit_themes', 'shailan-mp-options', );
 		
-		$page = add_menu_page(__('Marketplace Options', MSMP_DOMAIN), __('Marketplace', MSMP_DOMAIN), 'edit_themes', 'mp-theme-settings', array(MSMP_CLASSNAME, 'theme_options'), 'images/generic.png');
-		
-		add_submenu_page('mp-theme-settings', __('Market Place Theme Options', MSMP_DOMAIN), __('Theme Settings', MSMP_DOMAIN), 'edit_themes', 'mp-theme-settings');
+		$page = add_menu_page(__('Marketplace Options', 'marketplace'), __('Marketplace', 'marketplace'), 'edit_themes', 'mp-theme-settings', array(MSMP_CLASSNAME, 'theme_options'), 'images/generic.png');
+		add_submenu_page('mp-theme-settings', __('Market Place Theme Options', 'marketplace'), __('Theme Settings', 'marketplace'), 'edit_themes', 'mp-theme-settings');
 
-		// add_action( "admin_head-$page", array('K2', 'admin_head') );
-		// add_action( "admin_print_scripts-$page", array('K2', 'admin_print_scripts') );
+		add_action( "admin_head-$page", array('marketplace', 'admin_head') );
+		add_action( "admin_print_scripts-$page", array('marketplace', 'admin_print_scripts') );
 
 		if ( function_exists('add_contextual_help') ) {
 			add_contextual_help($page,
-				'<a href="http://shailan.com/wordpress/themes/marketplace/">' .  __('View Theme Page', MSMP_DOMAIN) . '</a><br />' .
-				'<a href="http://shailan.com/contact">' .  __('Contact Author', MSMP_DOMAIN) . '</a><br />'
+				'<a href="http://shailan.com/wordpress/themes/marketplace/">' .  __('View Theme Page', 'marketplace') . '</a><br />' .
+				'<a href="http://shailan.com/contact">' .  __('Contact Author', 'marketplace') . '</a><br />'
 				);
 		}
+	
+	}
+	
+	function admin_head(){
+	
+	}
+	
+	function admin_print_scripts(){
 	
 	}
 	
@@ -103,11 +109,11 @@ class shailan_marketPlace{
 <table class="form-table">
 <tr valign="top">
 <th scope="row"><label for="style"><?php _e('Logo URL', 'marketplace') ?></label></th>
-<td><input type="text" size="60" class="" name="<?php echo MSMP_OPTION_LOGO; ?>" id="<?php echo MSMP_OPTION_LOGO; ?>" value="<?php echo $logo; ?>" /><br /> <span class="description"><?php _e('Enter your logo URL here. It will be resized to fit.', MSMP_DOMAIN); ?></span></td>
+<td><input type="text" size="60" class="" name="<?php echo MSMP_OPTION_LOGO; ?>" id="<?php echo MSMP_OPTION_LOGO; ?>" value="<?php echo $logo; ?>" /><br /> <span class="description"><?php _e('Enter your logo URL here. It will be resized to fit.', 'marketplace'); ?></span></td>
 </tr>	
 <tr valign="top">
 <th scope="row"><label for="style"><?php _e('Advertise URL', 'marketplace') ?></label></th>
-<td><input type="text" size="60" class="" name="<?php echo $advertise_url_tag; ?>" id="<?php echo $advertise_url_tag; ?>" value="<?php echo $advertise_url; ?>" /><br /> <span class="description"><?php _e('Enter URL for your advertiser contact page.', MSMP_DOMAIN); ?></span></td>
+<td><input type="text" size="60" class="" name="<?php echo $advertise_url_tag; ?>" id="<?php echo $advertise_url_tag; ?>" value="<?php echo $advertise_url; ?>" /><br /> <span class="description"><?php _e('Enter URL for your advertiser contact page.', 'marketplace'); ?></span></td>
 </tr>	
 </table>
 </div>
@@ -132,11 +138,12 @@ class shailan_marketPlace{
 		// Delete deprecated options
 
 		// Install options
-		shailan_marketPlace::install();
+		marketplace::install();
 
 		// Update the version
 		update_option(MSMP_OPTION_VERSION, MSMP_VERSION);
 	}
+	
 	
 	
 	function logo(){
@@ -159,7 +166,7 @@ class shailan_marketPlace{
 	
 	//function get_logo_url(){ } <- TODO
 	
-}; //class shailan_marketPlace
+}; //class marketplace
 
 add_action('wp_head',array(MSMP_CLASSNAME, 'print_styles'));
 add_action('admin_menu', array(MSMP_CLASSNAME, 'add_options_menu'));
