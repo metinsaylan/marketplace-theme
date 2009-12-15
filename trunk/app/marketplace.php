@@ -144,8 +144,6 @@ class marketplace{
 		update_option(MSMP_OPTION_VERSION, MSMP_VERSION);
 	}
 	
-	
-	
 	function logo(){
 		$logo = get_option(MSMP_OPTION_LOGO);
 		$name = get_bloginfo('name');
@@ -162,6 +160,22 @@ class marketplace{
 	
 	function version(){
 		return MSMP_VERSION;
+	}
+	
+	/*
+	 * @description	Gets the first image and returns it's source URL.
+	 * @return		URL of the first image.
+	 */
+	function get_first_image() {
+		global $post, $posts;
+		$first_img = '';
+		$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
+		$first_img = $matches [1][0];
+		if($first_img){
+			return $first_img;
+		} else {
+			return get_bloginfo('template_directory')."/images/no-image.png";
+		}
 	}
 	
 	//function get_logo_url(){ } <- TODO
