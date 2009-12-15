@@ -85,7 +85,7 @@ class marketplace{
 	if(wp_verify_nonce($_POST['_wpnonce'])){ // Form submitted. Save settings.
 		
 		$logo = $_POST[MSMP_OPTION_LOGO];
-		$$advertise_url = $_POST[$advertise_url_tag];
+		$advertise_url = $_POST[$advertise_url_tag];
 		
 		update_option(MSMP_OPTION_LOGO, $logo); // TODO: Validate before saving
 		update_option($advertise_url_tag, $advertise_url);
