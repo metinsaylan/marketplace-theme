@@ -125,6 +125,9 @@ blockquote {
 #email, #url {
 	direction:ltr;
 }
-
+/* Right to left support */
 div.label-wrap{ display:inline; width:100px; float:right; clear:both; }
 div.field-wrap{ display:inline; float:left; }
+
+.ms-generator-container ul.ms-generator-list{float:right;}
+#sidebar-left{text-align:left;}
