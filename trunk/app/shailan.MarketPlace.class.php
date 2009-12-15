@@ -17,7 +17,7 @@ $shailanMP_theme_data = get_theme_data(TEMPLATEPATH.'/style.css');
 define('MSMP_TITLE','MarketPlace');
 define('MSMP_CLASSNAME','shailan_marketPlace');
 define('MSMP_VERSION', trim($shailanMP_theme_data['Version']));
-define('MSMP_DOMAIN','shailanMP_domain');
+define('MSMP_DOMAIN','marketplace');
 
 /* Define Options Hash */
 define('MSMP_OPTION_VERSION', 'shailanMP_version');
@@ -70,19 +70,25 @@ class shailan_marketPlace{
 	
 	function theme_options(){
 	// Read options 
+	$advertise_url_tag = 'marketplace_advertise_url';
+	
 	// $style = get_option(MSMP_OPTION_STYLE);	
 	$logo = get_option(MSMP_OPTION_LOGO);
+	$advertise_url = get_option($advertise_url_tag);
 	
 	if(wp_verify_nonce($_POST['_wpnonce'])){ // Form submitted. Save settings.
 		
 		$logo = $_POST[MSMP_OPTION_LOGO];
+		$$advertise_url = $_POST[$advertise_url_tag];
+		
 		update_option(MSMP_OPTION_LOGO, $logo); // TODO: Validate before saving
+		update_option($advertise_url_tag, $advertise_url);
 		
 		//$style = $_POST[MSMP_OPTION_STYLE];
 		//update_option(MSMP_OPTION_STYLE, $style);
 		
 		?>
-		<div class="updated"><p><strong><?php _e('Options saved.', 'shailanDropdownMenu_domain'); ?> </strong></p></div>
+		<div class="updated"><p><strong><?php _e('Options saved.', 'marketplace'); ?> </strong></p></div>
 		
 		<?php
 	}
@@ -96,8 +102,12 @@ class shailan_marketPlace{
 
 <table class="form-table">
 <tr valign="top">
-<th scope="row"><label for="style"><?php _e('Logo URL') ?></label></th>
+<th scope="row"><label for="style"><?php _e('Logo URL', 'marketplace') ?></label></th>
 <td><input type="text" size="60" class="" name="<?php echo MSMP_OPTION_LOGO; ?>" id="<?php echo MSMP_OPTION_LOGO; ?>" value="<?php echo $logo; ?>" /><br /> <span class="description"><?php _e('Enter your logo URL here. It will be resized to fit.', MSMP_DOMAIN); ?></span></td>
+</tr>	
+<tr valign="top">
+<th scope="row"><label for="style"><?php _e('Advertise URL', 'marketplace') ?></label></th>
+<td><input type="text" size="60" class="" name="<?php echo $advertise_url_tag; ?>" id="<?php echo $advertise_url_tag; ?>" value="<?php echo $advertise_url; ?>" /><br /> <span class="description"><?php _e('Enter URL for your advertiser contact page.', MSMP_DOMAIN); ?></span></td>
 </tr>	
 </table>
 </div>
