@@ -867,7 +867,7 @@ class CustomSearchField extends SearchFieldBase {
 	function getInput($wrap=true){
 		$input = $this->input->getInput($this->getQualifiedName(),$this->joiner,$this->name);
 		if($wrap){
-			$input = "<div class='searchform-param'><label class='searchform-label'>".$this->getLabel()."</label><span class='searchform-input-wrapper'>$input</span></div>";
+			$input = "<div class='searchform-param'><div class='label-wrap'><label class='searchform-label'>".$this->getLabel()."</label></div><div class='field-wrap'><span class='searchform-input-wrapper'>$input</span></div></div>";
 		}
 		return $input;
 	}
