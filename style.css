@@ -51,19 +51,27 @@ ul.top-menu li.current_page_item a { font-weight:bold; color:#ddd; }
 	content: "";
 	}
 	
+.information td{ text-align:right; vertical-align:top; }
+	
 #sidebar-left{ float:left; width:220px; border:0px; margin:10px 10px 10px 2px; text-align:left;}
 #sidebar-left .widget h2 { font-size:1.2em; margin:0.3em 0px; }
 #sidebar-left .widget{width:225px; overflow:hidden; margin:0px; margin-bottom:2px; }
 
 .custom_search {background:#212121 url('images/fadin-gray.gif') repeat-x top left; padding:5px;}
-.custom_search input, select{ border:1px solid #000; background:corn; padding:3px; font-size:1.2em; font-family:Georgia, Arial, Helvetica, sans-serif; width:100px;}
-.custom_search input[type=submit]{background:#ff9933;}
+.custom_search input, select{ border:1px solid #000; background:corn; padding:3px; font-size:1.1em; font-family:Georgia, Arial, Helvetica, sans-serif; width:100px;}
+.custom_search input[type=submit]{background:#ff9933; width:150px;}
 
 #sidebar .searchform-input-wrapper input,
 .searchform-input-wrapper input,
 .searchform-input-wrapper select{
-    width: 100px;
+    width: 120px;
 }
+
+div.label-wrap{ display:inline; width:100px; float:left; clear:both; }
+div.field-wrap{ display:inline; float:right; }
+
+.searchform-controls{ clear:both; text-align:center; }
+
 
 #sidebar-right{ float:right; width:120px; background:#333; margin:3px 0px; padding:10px; text-align:center; }
 #sidebar-right .widget h2 { font-size:1.2em; margin:0.3em 0px; }
