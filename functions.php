@@ -8,6 +8,9 @@ define('THEME_VERSION', trim($shailanMP_theme_data['Version']) );
 
 automatic_feed_links();
 
+/**
+ *  Register theme sidebars
+ */
 if ( function_exists('register_sidebar') ) {
 	$args = array(
     'name'          => 'Header',
@@ -56,18 +59,27 @@ if ( function_exists('register_sidebar') ) {
 	
 }
 
-include_once('app/shailan.MarketPlace.class.php');
+/** 
+ * Base theme class
+ */ 
+include_once('app/marketplace.php');
 
-/* WIDGETS */
+/** 
+ * Widgets
+ */ 
 include_once('widgets/shailan.BannerWidget.php');
 include_once('widgets/mp_featured_products_widget.php');
 include_once('widgets/mp_random_products_widget.php');
 include_once('widgets/shailan.php');
 
-/* PLUGINS */
+/** 
+ * Plugins
+ */ 
 include_once('plugins/wp-custom-fields-search/wp-custom-fields-search.php');
 include_once('plugins/wp-generator/ms_generator.php');
 
+
+// Initialize theme
 marketplace::init();
 
 ?>
