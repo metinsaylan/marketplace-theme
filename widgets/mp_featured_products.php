@@ -33,7 +33,7 @@ class mp_featured_products_widget extends WP_Widget {
 		<ul class="image-list">
         <?php while ($r->have_posts()) : $r->the_post(); ?> 	
             <li>
-                <a href="<?php the_permalink() ?>" title="Click on image for details"><img src="<?php echo shailan::get_first_image(); ?>" width="120" height="100" /></a>
+                <a href="<?php the_permalink() ?>" title="Click on image for details"><img src="<?php echo marketplace::get_first_image(); ?>" width="120" height="100" /></a>
             </li>
         <?php endwhile; ?>   
         </ul>
