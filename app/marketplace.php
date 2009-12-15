@@ -178,6 +178,10 @@ class marketplace{
 		}
 	}
 	
+	function get_advertise_url(){
+		return get_option('marketplace_advertise_url');
+	}
+	
 	//function get_logo_url(){ } <- TODO
 	
 }; //class marketplace
