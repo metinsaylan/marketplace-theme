@@ -51,7 +51,7 @@ ul.top-menu li.current_page_item a { font-weight:bold; color:#ddd; }
 	content: "";
 	}
 	
-.information td{ text-align:right; vertical-align:top; }
+.information td{ text-align:left; vertical-align:top; }
 	
 #sidebar-left{ float:left; width:220px; border:0px; margin:10px 10px 10px 2px; text-align:left;}
 #sidebar-left .widget h2 { font-size:1.2em; margin:0.3em 0px; }
