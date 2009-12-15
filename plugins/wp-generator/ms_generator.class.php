@@ -241,9 +241,9 @@ if (!class_exists("wpGenerator")) {
 					
 					$classname = 'msg_' . wpGenerator::sanitizeName( $msg_field['name'] );
 					
-					if($style=='list'){
+					if($style=='List'){
 						echo "<li class='$classname'>";
-					} elseif($style=='table') {
+					} elseif($style=='Table') {
 						echo "<tr><td class='$classname'>";
 					} else {			
 						echo "<span class='$classname'>";
@@ -255,9 +255,9 @@ if (!class_exists("wpGenerator")) {
 					
 						echo $msg_field['name'];
 						
-							if($style=='list'){
+							if($style=='List'){
 								echo " :";
-							} elseif($style=='table') {
+							} elseif($style=='Table') {
 								echo "</td><td class='$classname'>";
 							} else {			
 								//echo "";
@@ -266,9 +266,9 @@ if (!class_exists("wpGenerator")) {
 					
 					echo $meta_value . $msg_field['after'];	
 
-					if($style=='list'){
+					if($style=='List'){
 						echo "</li>";
-					} elseif($style=='table') {
+					} elseif($style=='Table') {
 						echo "</td></tr>";
 					} else {			
 						echo "</span>";
@@ -277,9 +277,9 @@ if (!class_exists("wpGenerator")) {
 				}
 			} else { echo "No fields exist."; }
 			
-			if($style=='list'){
+			if($style=='List'){
 				echo "</ul></div>";
-			} elseif($style=='table') {
+			} elseif($style=='Table') {
 				echo "</table></div>";
 			} else {			
 				echo "</span>";
