@@ -125,3 +125,6 @@ blockquote {
 #email, #url {
 	direction:ltr;
 }
+
+div.label-wrap{ display:inline; width:100px; float:right; clear:both; }
+div.field-wrap{ display:inline; float:left; }

@@ -497,8 +497,8 @@ function updateListing(){
 <label for="<?php echo $style_tag; ?>"><?php _e('Display style') ?></label></th>
 <td><select name="<?php echo $style_tag; ?>">
 <option value="List" <?php if($style=='List'){echo "selected";}; ?> >List</option>
-<option value="Table" <?php if($list_empty=='Table'){echo "selected";}; ?> >Table</option>
-<option value="Inline" <?php if($list_empty=='Inline'){echo "selected";}; ?> >Inline</option>
+<option value="Table" <?php if($style=='Table'){echo "selected";}; ?> >Table</option>
+<option value="Inline" <?php if($style=='Inline'){echo "selected";}; ?> >Inline</option>
 </select> <span class="description"><?php _e('How to display the listing fields.') ?></span></td>
 </tr>	
 
