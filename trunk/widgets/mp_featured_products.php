@@ -22,6 +22,7 @@ class mp_featured_products_widget extends WP_Widget {
         $title = apply_filters('widget_title', $instance['title']);
 		$count = $instance['count'];		
 		$cat = $instance['category'];
+		$banner = (bool) $instance['banner'];
 		
 		echo $before_widget; ?>
                   <?php if ( $title )
@@ -35,7 +36,14 @@ class mp_featured_products_widget extends WP_Widget {
             <li>
                 <a href="<?php the_permalink() ?>" title="Click on image for details"><img src="<?php echo marketplace::get_first_image(); ?>" width="120" height="100" /></a>
             </li>
-        <?php endwhile; ?>   
+        <?php endwhile; ?>
+		<?php 
+			if($banner){
+				echo '<li>';
+					echo '<a href="'.marketplace::get_advertise_url().'" alt="Click!"><img src="'.get_bloginfo('template_directory').'/images/featured-banner.png" width="120" height="100" /></a>';
+				echo '</li>';
+			};
+		?>		
         </ul>
         
 		<?php } else { ?>
@@ -54,6 +62,7 @@ class mp_featured_products_widget extends WP_Widget {
         $title = esc_attr($instance['title']);
 		$type = $instance['type'];
 		$category = $instance['category'];
+		$banner = (bool) $instance['banner'];
 		
         ?>
             <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label></p>
@@ -71,7 +80,10 @@ class mp_featured_products_widget extends WP_Widget {
 </select></label></p>
 			
 			<p><label for="<?php echo $this->get_field_id('count'); ?>"><?php _e('Number of items:'); ?> <input class="" size="4" id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>" type="text" value="<?php echo $count; ?>" /></label><br /> 
-		<small>Enter number of posts to be displayed.</small></p>
+			<small>Enter number of posts to be displayed.</small></p>
+			
+			<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('banner'); ?>" name="<?php echo $this->get_field_name('banner'); ?>"<?php checked( $banner ); ?> />
+		<label for="<?php echo $this->get_field_id('banner'); ?>"><?php _e( 'Include banner' ); ?></label><br />
 		
 	<div class="widget-control-actions alignright">
 	<p><small><a href="http://shailan.com/wordpress/plugins/custom-featured-images">Visit plugin site</a></small></p>
