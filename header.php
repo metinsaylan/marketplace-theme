@@ -26,7 +26,9 @@
 		<?php shailan_marketPlace::logo(); ?>
 	</div>
 	<div id="banners-main">
-		<?php dynamic_sidebar('header-widgets-top'); ?>
+		<?php if(!dynamic_sidebar('header-widgets-top')){
+			echo '<img src="'.get_bloginfo('template_directory').'/images/top-banner.png" width="600" height="90" />';
+		}; ?>
 	</div>
 		<div class="clear"></div>
 	<div id="banners-menu">
