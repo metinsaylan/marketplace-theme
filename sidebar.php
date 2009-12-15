@@ -10,7 +10,7 @@
 			<?php if(!dynamic_sidebar('sidebar-right')){ ?>
 			
 			<?php 
-				$opts = array ('title'=>'Recently Added','category'=>'','count'=>'5');
+				$opts = array ('title'=>'Recently Added','category'=>'','count'=>'5', 'banner'=>true);
 				the_widget('mp_featured_products_widget', $opts);
 			?>
 			
