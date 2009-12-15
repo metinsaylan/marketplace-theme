@@ -50,7 +50,7 @@ ul.top-menu li.current_page_item a { font-weight:bold; color:#ddd; }
 .ms-generator-container ul li:before {
 	content: "";
 	}
-
+	
 #sidebar-left{ float:left; width:220px; border:0px; margin:10px 10px 10px 2px; text-align:left;}
 #sidebar-left .widget h2 { font-size:1.2em; margin:0.3em 0px; }
 #sidebar-left .widget{width:225px; overflow:hidden; margin:0px; margin-bottom:2px; }
