@@ -215,7 +215,9 @@ if (!class_exists("wpGenerator")) {
 			
 			if($style=='list'){
 				echo "<div class='ms-generator-container'><ul class='ms-generator-list'>";
-			} else {
+			} elseif($style=='table') {
+				echo "<div class='ms-generator-container'><table class='ms-generator-list'>";
+			} else {			
 				echo "<span class='ms-generator-container'>";
 			}
 			
@@ -230,18 +232,50 @@ if (!class_exists("wpGenerator")) {
 					if($meta_value==''){$meta_value="-";}
 					
 					$classname = 'msg_' . wpGenerator::sanitizeName( $msg_field['name'] );
-					echo "<li class='$classname'>";
+					
+					if($style=='list'){
+						echo "<li class='$classname'>";
+					} elseif($style=='table') {
+						echo "<tr><td class='$classname'>";
+					} else {			
+						echo "<span class='$classname'>";
+					}					
+					
 					echo $msg_field['before'];
+					
 					if($show_labels){
-						echo $msg_field['name']." :";
+					
+						echo $msg_field['name'];
+						
+							if($style=='list'){
+								echo " :";
+							} elseif($style=='table') {
+								echo "</td><td class='$classname'>";
+							} else {			
+								//echo "";
+							}	
 					}
-					echo $meta_value . $msg_field['after'];		
-					echo "</li>";				
+					
+					echo $meta_value . $msg_field['after'];	
+
+					if($style=='list'){
+						echo "</li>";
+					} elseif($style=='table') {
+						echo "</td></tr>";
+					} else {			
+						echo "</span>";
+					}			
 				  }
 				}
 			} else { echo "No fields exist."; }
 			
-			echo "</ul></div>";
+			if($style=='list'){
+				echo "</ul></div>";
+			} elseif($style=='table') {
+				echo "</table></div>";
+			} else {			
+				echo "</span>";
+			}		
 		   
 		   return true;
 		}
@@ -268,17 +302,21 @@ if (!class_exists("wpGenerator")) {
 			// Option names
 			$show_labels_name = 'show_labels';
 			$list_empty_name = 'list_empty';
+			$style_tag = 'shailan_msgen_style';
 	
 			// Read options 
 			$show_labels = get_option($show_labels_name);
 			$list_empty = get_option($list_empty_name);
+			$style = get_option($style_tag);
 			
 			if(wp_verify_nonce($_POST['_wpnonce'])){ // Form submitted. Save settings.
 				$show_labels = $_POST[$show_labels_name];
-				$list_empty = $_POST[$list_empty_name];  //get_option('theme');
+				$list_empty = $_POST[$list_empty_name]; 
+				$style = $_POST[$style_tag];
 				
 				update_option($show_labels_name, $show_labels);
 				update_option($list_empty_name, $list_empty);				
+				update_option($style_tag, $style);
 				
 				?> <div class="updated"><p><strong><?php _e('Options saved.', 'shailanDropdownMenu_domain'); ?></strong></p></div> <?php
 				
@@ -455,6 +493,15 @@ function updateListing(){
 <option value="No" <?php if($list_empty=='No'){echo "selected";}; ?> >No</option>
 </select> <span class="description"><?php _e('If show labels is checked this will show empty labels when there is no data for a field.') ?></span></td>
 </tr>	
+<tr valign="top"><th scope="row">
+<label for="<?php echo $style_tag; ?>"><?php _e('Display style') ?></label></th>
+<td><select name="<?php echo $style_tag; ?>">
+<option value="List" <?php if($style=='List'){echo "selected";}; ?> >List</option>
+<option value="Table" <?php if($list_empty=='Table'){echo "selected";}; ?> >Table</option>
+<option value="Inline" <?php if($list_empty=='Inline'){echo "selected";}; ?> >Inline</option>
+</select> <span class="description"><?php _e('How to display the listing fields.') ?></span></td>
+</tr>	
+
 </table>
 
 <h3>Listing fields</h3>
