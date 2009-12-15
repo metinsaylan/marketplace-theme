@@ -24,7 +24,7 @@ get_header(); ?>
 						echo "MS WP-Generator must be installed and activated for listings to work.";
 					}?>
 				</td><td width="120">
-					<a href="<?php the_permalink() ?>" title="Click on image for details"><img src="<?php echo shailan::get_first_image(); ?>" width="180" height="150" /></a>
+					<a href="<?php the_permalink() ?>" title="Click on image for details"><img src="<?php echo marketplace::get_first_image(); ?>" width="180" height="150" /></a>
 				</td></tr>
 				</table>					
 				</div>
