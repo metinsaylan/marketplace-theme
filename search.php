@@ -20,11 +20,20 @@ get_header(); ?>
 
 		<?php while (have_posts()) : the_post(); ?>
 
-			<div <?php post_class() ?>>
-				<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
-				<small><?php the_time('l, F jS, Y') ?></small>
-
-				<p class="postmetadata"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?> | <?php edit_post_link('Edit', '', ' | '); ?>  <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?></p>
+			<div <?php post_class() ?> id="post-<?php the_ID(); ?>">
+				<div class="entry">
+				<div class="controls"><?php edit_post_link('Edit', '', ''); ?></div>
+				<table class="information" width="100%" style="padding:10px;"><tr><td colspan="2">
+					<?php the_title(); ?>
+				</td></tr><tr><td>
+					<?php if(function_exists('ms_generator')){ ms_generator(); } else { 
+						echo "MS WP-Generator must be installed and activated for listings to work.";
+					}?>
+				</td><td width="120">
+					<a href="<?php the_permalink() ?>" title="Click on image for details"><img src="<?php echo marketplace::get_first_image(); ?>" width="180" height="150" /></a>
+				</td></tr>
+				</table>					
+				</div>
 			</div>
 
 		<?php endwhile; ?>
