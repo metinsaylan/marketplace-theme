@@ -1,10 +1,5 @@
 <?php
-/**
- * @package WordPress
- * @subpackage Default_Theme
- */
-
-get_header();
+	get_header();
 ?>
 
 	<div id="content" class="widecolumn" role="main">
@@ -19,7 +14,7 @@ get_header();
 				<table class="information" width="100%" style="padding:10px;"><tr><td>
 					<?php if(function_exists('ms_generator')){ ms_generator(); } ?>
 				</td><td width="120">
-					<a href="<?php the_permalink() ?>" title="Click on image for details"><img src="<?php echo shailan::get_first_image(); ?>" width="120" height="100" /></a>
+					<a href="<?php the_permalink() ?>" title="Click on image for details"><img src="<?php echo marketplace::get_first_image(); ?>" width="120" height="100" /></a>
 				</td></tr>
 				</table>
 			
@@ -72,5 +67,6 @@ get_header();
 <?php endif; ?>
 
 	</div>
-
+	
+<?php get_sidebar(); ?>
 <?php get_footer(); ?>
