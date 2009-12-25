@@ -54,6 +54,15 @@ if (!class_exists("wpGenerator")) {
 			// and exit silently..
 			return true;
 		}
+		
+		// Drop table and recreate
+		function reinstall(){
+			// Drop database table
+			$sql = "DROP TABLE `".MSG_CONTROLS."`";
+			mysql_query($sql);
+			// Re-create the database table
+			wpGenerator::createFieldsTable();
+		}
 	
 	    function getAdminOptions(){
 			//load options and reload the administration form
@@ -67,10 +76,11 @@ if (!class_exists("wpGenerator")) {
 			// NOTABLE. Create it.
 				$sql = "CREATE TABLE `".MSG_CONTROLS."` (
 						  `id` int(12) NOT NULL auto_increment,
-						  `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-						  `before` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-						  `after` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+						  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+						  `type` enum('text','dropdown','price', 'image') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+						  `values` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
 						  `default` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+						  `req` enum('0','1') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
 						  `position` int(5) NOT NULL,
 						  `flag` enum('1','2') NOT NULL,
 						  `ListingID` int(11) NOT NULL,
@@ -320,15 +330,26 @@ if (!class_exists("wpGenerator")) {
 			$style = get_option($style_tag);
 			
 			if(wp_verify_nonce($_POST['_wpnonce'])){ // Form submitted. Save settings.
-				$show_labels = $_POST[$show_labels_name];
-				$list_empty = $_POST[$list_empty_name]; 
-				$style = $_POST[$style_tag];
+			
+				$action = $_POST['action'];
 				
-				update_option($show_labels_name, $show_labels);
-				update_option($list_empty_name, $list_empty);				
-				update_option($style_tag, $style);
+				if($action=='Re-install'){
+					wpGenerator::reinstall();
+					$msg = _('Database re-installed successfully.');
+				} elseif ($action=='Save Changes'){
 				
-				?> <div class="updated"><p><strong><?php _e('Options saved.', 'shailanDropdownMenu_domain'); ?></strong></p></div> <?php
+					$show_labels = $_POST[$show_labels_name];
+					$list_empty = $_POST[$list_empty_name]; 
+					$style = $_POST[$style_tag];
+								
+					update_option($show_labels_name, $show_labels);
+					update_option($list_empty_name, $list_empty);				
+					update_option($style_tag, $style);
+					
+					$msg = _('Options saved.');
+				}
+				
+				?> <div class="updated"><p><strong><?php echo $msg; ?></strong></p></div> <?php
 				
 			} // Form submitted
 			
@@ -338,15 +359,15 @@ if (!class_exists("wpGenerator")) {
 /* -------------------------- */
 /* Show Hide */
 /* -------------------------- */
-function cfgShowHide(id, path) {
+function cfgShowHide(id) {
   var div = document.getElementById('collsp_'+id);
   var img = document.getElementById('cfgimg_'+id);
   if ( div.style.display == 'none' ) {
   	div.style.display = 'block';
-	img.src = path + '/image/arr2.gif';
+	img.src = '<?php echo MSG_FULLPATH;?>/image/arr2.gif';
   } else { 
   	div.style.display = 'none';
-	img.src = path + '/image/arr1.gif';
+	img.src = '<?php echo MSG_FULLPATH;?>/image/arr1.gif';
   }
 }
 /* -------------------------- */
@@ -359,39 +380,85 @@ function trim(str) {
 /* Save */
 /* -------------------------- */
 var nocache = 0;
-function saveField(fldname,fldDefault,fldBefore, fldAfter, x){ 
+
+var fields = new Array();
+
+//      field[] = {name of field, type, req}
+fields[0] = new Array('name', 'text', 1);
+fields[1] = new Array('default', 'text', 0);
+fields[2] = new Array('type', 'dropdown', 0);
+fields[3] = new Array('values', 'text', 0);
+fields[4] = new Array('required', 'checkbox', 0);
+
+function saveField(x){ 
 	var position = x;
-	var name = document.getElementById(fldname).value;
-	var fldDef = document.getElementById(fldDefault).value;
-	var fldBef = document.getElementById(fldBefore).value;
-	var fldAft = document.getElementById(fldAfter).value;
-	
-		// ** START **
-		if ( name == "" ) {
-			alert( "Please enter a name for your field." );
-			return false ;
-		}else  if ( 0 ) {
-			// intentionally blank for additional conditions.
-			return false ;
+	var err=false;
+	poststr = "position="+x;
+	params = new Array();
+	for(i=0; i<fields.length; i++){
+		var param_tag = x + "_" + fields[i][0];
+		//alert(param_tag);
+		switch(fields[i][1])
+		{
+		case 'text':
+		  params[i] = document.getElementById(param_tag).value;
+		  /*
+		  if( params[i].length==0 && fields[i][2] == 1){ 
+				alert("Please enter a value for " + fields[i][0] ); err=true; break; };
+			*/	
+		  poststr += "&" + fields[i][0] + "=" + escape(encodeURI(params[i]));
+		  break;
+		case 'dropdown':
+		  var sel = document.getElementById(param_tag);
+		  poststr += "&" + fields[i][0] + "=" + sel.options[sel.selectedIndex].value;
+		  break;
+		case 'checkbox':
+		  if (document.getElementById(param_tag).checked) {
+              poststr += "&" + fields[i][0] + "=" + 
+                   document.getElementById(param_tag).value;
+          } else {
+              poststr += "&" + fields[i][0] + "=&";
+          }
+		  break;
+		case 'radio':
+		  if (document.getElementById(param_tag).checked) {
+            poststr += "&" + fields[i][0] + "=" + 
+                   document.getElementById(param_tag).value;
+          }
+		  break;
+		default:
+		  //code to be executed if n is different from case 1 and 2
 		}
-		// ** END **
-	// SETUP ARGUMENTS
-	nocache = Math.random();
+	}
 	
-	// START AJAX
-	document.getElementById(position+'insert_response').innerHTML = '<img src="<?php echo MSG_FULLPATH;?>image/spinner.gif" border="0" align="absmiddle"> Saving...';	
-	
-	http.open('get', '<?php echo MSG_FULLPATH; ?>process.php?name='+name+'&before='+fldBef+'&after='+fldAft+'&default='+fldDef+'&position='+position+'&flag=2&nocache='+nocache+'');
+	if(!err){
+		nocache = Math.random();
+		// START AJAX
+	document.getElementById(position+'insert_response').innerHTML = '<img src="<?php echo MSG_FULLPATH;?>image/spinner.gif" border="0" align="absmiddle"> Saving...';
 	
 	http.onreadystatechange = function insertReply() {
-								if(http.readyState == 4){
-									///var response = http.responseText;
-									///var records = response.split(",");
-									///document.getElementById(position+'insert_response').innerHTML = '&nbsp;'+records['0'];
-									setTimeout('refreshdiv()', 1000);
-									}
+									if (http.readyState == 4) {
+										 if (http.status == 200) {
+											//alert(http_request.responseText);
+											result = http.responseText;
+											document.getElementById(position+'insert_response').innerHTML = result;            
+										 } else {
+											alert('There was a problem with the request.');
+										 }
+										 
+										//setTimeout('refreshdiv()', 1000);
+									  }									
 								}
-	http.send(null);
+	poststr += '&nocache = '+nocache;
+	
+	//alert(poststr);
+	
+	http.open('POST', '<?php echo MSG_FULLPATH; ?>process.php', true);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.setRequestHeader("Content-length", poststr.length);
+    http.setRequestHeader("Connection", "close");
+    http.send(poststr);
+	}
 }
 /* ---------------------------- */
 /* XMLHTTPRequest Enable */
@@ -421,11 +488,32 @@ function remove( position ){
 		d.removeChild(olddiv);
 		// Remove from database
 		nocache = Math.random();
-		http.open('get', '<?php echo MSG_FULLPATH; ?>process.php?position='+position+'&msg='+<?php echo MSG_MESSAGE_REMOVE; ?>+'&nocache = '+nocache);
-		http.onreadystatechange = function insertReply() {
-										if(http.readyState == 4){ }
-									}
-		http.send(null);
+		
+		poststr = 'position='+position+'&msg='+<?php echo MSG_MESSAGE_REMOVE; ?>+'&nocache = '+nocache;
+		
+		alert(poststr);
+	
+	http.onreadystatechange = function insertReply() {
+									if (http.readyState == 4) {
+										 if (http.status == 200) {
+											//alert(http_request.responseText);
+											result = http.responseText;
+											document.getElementById(position+'insert_response').innerHTML = result;            
+										 } else {
+											alert('There was a problem with the request.');
+										 }
+										 
+										//setTimeout('refreshdiv()', 1000);
+									  }									
+								}
+	
+	
+	
+	http.open('POST', '<?php echo MSG_FULLPATH; ?>process.php', true);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.setRequestHeader("Content-length", poststr.length);
+    http.setRequestHeader("Connection", "close");
+    http.send(poststr);
 	
 	} else {
 		return false;
@@ -462,8 +550,7 @@ function addField(){
 	curFieldNumber =curFieldNumber+1;
 	x = curFieldNumber;
 	x = curFieldNumber;
-	var fieldHtml = "<div id=\"recordsArray_"+x+"\"><div class='eHelp' align='left'><div style='float:right'><a onClick=\"saveField('"+x+"_name','"+x+"_default','"+x+"_before','"+x+"_after','"+x+"');\" style='text-decoration:none; cursor:pointer'>Save</a>&nbsp;|&nbsp; <a onClick=\"remove('"+x+"');\" style='text-decoration:none; cursor:pointer'>Remove</a>&nbsp;&nbsp;&nbsp;&nbsp;<a onclick=\"cfgShowHide('"+x+"', '<?php echo MSG_FULLPATH;?>')\" style=\"cursor:pointer;cursor:hand;\"><img src=\"<?php echo MSG_FULLPATH;?>/image/arr1.gif\" id=\"cfgimg_"+x+"\" align=\"absmiddle\" border=\"0\" alt=\"\" /></a></div><div style=\"color: #0066FF;font-weight:bold; font-size:12px\">Field&nbsp;<span style='font-size:10px; font-weight:normal; color:#666666; padding-top:4px;' ></span>&nbsp;&nbsp;<span style='font-size:10px; font-weight:normal; color:#CC0000; padding-top:4px;' id='"+x+"insert_response'> </span></div><div id=\"collsp_"+x+"\" style=\"margin-top:6px; border-top:1px solid #dddddd;\"><table>	  <tr><td><b>Name:</b></td><td><input type='text' id='"+x+"_name' class='widefat' style=\"width:400px;\" value=\"\" ></td></tr> <tr><td><b>Default value:</b></td><td><input type='text' name='size' class='widefat' style='width:400px;' id='"+x+"_default' value=\"\" ></td></tr><tr><td><b>Before:</b></td><td><input type='text' name='size' class='widefat' style='width:400px;' id='"+x+"_before' value=\"\" ></td></tr><tr><td><b>After:</b></td><td><input type='text' name='size' class='widefat' style='width:400px;' id='"+x+"_after' value=\"\" ></td></tr></table></div></div></div>";
-	
+	var fieldHtml = "<div id=\"recordsArray_"+x+"\"><div class='eHelp' align='left'><div style='float:right'><a onClick=\"saveField('"+x+"');\" style='text-decoration:none; cursor:pointer'>Save</a>&nbsp;|&nbsp;<a onClick=\"remove('"+x+"');\" style='text-decoration:none; cursor:pointer'>Remove</a>&nbsp;&nbsp;&nbsp;&nbsp;<a onclick=\"cfgShowHide('"+x+"')\" style=\"cursor:pointer;cursor:hand;\"><img src=\"<?php echo MSG_FULLPATH;?>/image/arr1.gif\" id=\"cfgimg_"+x+"\" align=\"absmiddle\" border=\"0\" alt=\"\" /></a></div><div style=\"color: #0066FF;font-weight:bold; font-size:12px\">Field&nbsp;<span style='font-size:10px; font-weight:normal; color:#666666; padding-top:4px;' ></span>&nbsp;&nbsp;<span style='font-size:10px; font-weight:normal; color:#CC0000; padding-top:4px;' id='"+x+"insert_response'> </span></div><div id=\"collsp_"+x+"\" style=\"margin-top:6px; border-top:1px solid #dddddd;\"><table><tr><td><b>Name:</b></td><td><input type='text' id='"+x+"_name' class='widefat' style=\"width:400px;\" value=\"\" ></td></tr><tr><td><b>Default value:</b></td><td><input type='text' name='"+x+"_default' class='widefat' style='width:400px;' id='"+x+"_default' value=\"\" ></td></tr><tr><td><b>Type:</b></td><td><select name=\""+x+"_type\" id=\""+x+"_type\"><option name=\"\" value=\"text\" >Text</option><option name=\"\" value=\"dropdown\" >Dropdown</option></select></td></tr>	  <tr><td><b>Values:</b></td><td><input type='text' name='"+x+"_values' class='widefat' style='width:400px;' id='"+x+"_values' value=\"\" ></td></tr><tr><td><b>Required:</b></td><td><input type='checkbox' name='"+x+"_required' id='"+x+"_required' value='' /></td></tr></table></div></div></div>";
 	
 	html = html + fieldHtml; 
 	document.getElementById('stage').innerHTML = html;
@@ -523,7 +610,7 @@ function updateListing(){
 </p>
 
 <p class="submit">
-<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes'); ?>" />
+<input type="submit" name="action" class="button-primary" value="<?php esc_attr_e('Save Changes'); ?>" /> <input type="submit" name="action" value="Re-install" />
 </p>
 </form>
 <p>

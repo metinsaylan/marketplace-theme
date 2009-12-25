@@ -2,13 +2,17 @@
 include_once('../../../../../wp-config.php');
 
 // Field Values
-$name = $_GET['name'];
-$position = $_GET['position'];
-$before = $_GET['before'];
-$after = $_GET['after'];
-$default = $_GET['default'];
-$msg = $_GET['msg'];
-$flag = $_GET['flag'];
+//'$name', '$type', '$values', '$default', '$req', '$position', '$flag', '$max_value'
+
+$position = $_POST['position'];
+$name = urldecode($_POST['name']);
+$type = $_POST['type'];
+$values = urldecode($_POST['values']);
+$default = urldecode($_POST['default']);
+$req = $_POST['required'];
+$flag = 2; //$_POST['flag'];
+
+$msg = $_POST['msg'];
 
 $sql = "select position,flag from ".MSG_CONTROLS." where position = '$position' ";
 $process = mysql_query($sql);
@@ -32,9 +36,10 @@ $db_position = mysql_fetch_array($process);
 		 // Update
 			$sql = " UPDATE ".MSG_CONTROLS." SET 
 					 `name` = '$name',
+					 `type` = '$type',
+					 `values` = '$values',
 					 `default` = '$default',
-					 `before` = '$before',
-					 `after` = '$after',
+					 `req` = '$req',
 					 `flag` = '$flag'
 					 WHERE `position` = '$position' ";
 			mysql_query($sql);
@@ -45,10 +50,10 @@ $db_position = mysql_fetch_array($process);
 		}
 	} else {
 	  // INSERT
-	  $sql = "INSERT INTO ".MSG_CONTROLS." (`id`, `name`, `before`, `after`, `default`, `position`, `flag`, `ListingID`) VALUES (NULL, '$name', '$before', '$after', '$default', '$position', '$flag', '$max_value');";
+	  $sql = "INSERT INTO ".MSG_CONTROLS." (`id`, `name`, `type`, `values`, `default`, `req`, `position`, `flag`, `ListingID`) VALUES (NULL, '$name', '$type', '$values', '$default', '$req', '$position', '$flag', '$max_value');";
 	  
-		/* $sql = "insert into ".MSG_CONTROLS."(name,default,before,after,position,flag,ListingID) 
-				values('$name','$default','$before','$after','$position','$flag','$max_value')"; */
+	  //$sql = "INSERT INTO ".MSG_CONTROLS." (`id`, `name`, `before`, `after`, `default`, `position`, `flag`, `ListingID`) VALUES (NULL, , '$before', '$after', '$default', '$position', '$flag', '$max_value');";
+	  
 		mysql_query($sql);
 	}
 	
