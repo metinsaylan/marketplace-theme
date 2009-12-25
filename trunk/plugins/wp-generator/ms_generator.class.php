@@ -446,7 +446,7 @@ function saveField(x){
 											alert('There was a problem with the request.');
 										 }
 										 
-										//setTimeout('refreshdiv()', 1000);
+										setTimeout('refreshdiv()', 1000);
 									  }									
 								}
 	poststr += '&nocache = '+nocache;
