@@ -27,11 +27,15 @@ if( $_GET['connection'] == '1' ){ include_once('../../../../../wp-config.php'); 
 		<select name="<?php echo $rs['position']; ?>_type" id="<?php echo $rs['position']; ?>_type">
 			<option name="" value="text" <?php if($rs['type']=='text'){ echo "selected"; } ?> >Text</option>
 			<option name="" value="dropdown" <?php if($rs['type']=='dropdown'){ echo "selected"; } ?> >Dropdown</option>
+			<option name="" value="checkbox" <?php if($rs['type']=='checkbox'){ echo "selected"; } ?> >Checkbox</option>
+			<option name="" value="radio" <?php if($rs['type']=='radio'){ echo "selected"; } ?> >Radio</option>
+			<option name="" value="price" <?php if($rs['type']=='price'){ echo "selected"; } ?> >Price</option>
+			<option name="" value="image" <?php if($rs['type']=='image'){ echo "selected"; } ?> >Image</option>
 		</select>
 	  </td></tr>
 	  <tr><td><b>Values:</b></td><td><input type='text' name='<?php echo $rs['position']; ?>_values' class='widefat' style='width:400px;' id='<?php echo $rs['position']; ?>_values' value="<?php echo htmlentities($rs['values'], ENT_QUOTES); ?>" ></td></tr>
 		<tr><td><b>Required:</b></td><td>
-			<input type='checkbox' name='<?php echo $rs['position']; ?>_required' id='<?php echo $rs['position']; ?>_required' value='<?php echo htmlentities($rs['required'], ENT_QUOTES); ?>' <?php checked($rs['required']); ?> />
+			<input type='checkbox' name='<?php echo $rs['position']; ?>_required' id='<?php echo $rs['position']; ?>_required' value='1' <?php if($rs['req']=='1'){echo " checked='checked'";}; ?> />
 		</td></tr>
 	</table>
     </div>
