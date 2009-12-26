@@ -77,7 +77,7 @@ if (!class_exists("wpGenerator")) {
 				$sql = "CREATE TABLE `".MSG_CONTROLS."` (
 						  `id` int(12) NOT NULL auto_increment,
 						  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-						  `type` enum('text','dropdown','price', 'image') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+						  `type` enum('text','dropdown','checkbox','radio','price', 'image') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
 						  `values` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
 						  `default` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
 						  `req` enum('0','1') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
@@ -96,8 +96,8 @@ if (!class_exists("wpGenerator")) {
 		
 		// Adds meta box for the custom fields.
 		function addMetaBox(){
-			add_meta_box('mscf-meta', MSG_NAME, array(MSG_CLASSNAME, 'metaBox') , 'post', 'normal');
-			add_meta_box('mscf-meta', MSG_NAME, array(MSG_CLASSNAME, 'metaBox') , 'page', 'normal');
+			add_meta_box('mscf-meta', 'Marketplace Listing Fields', array(MSG_CLASSNAME, 'metaBox') , 'post', 'normal');
+			add_meta_box('mscf-meta', 'Marketplace Listing Fields', array(MSG_CLASSNAME, 'metaBox') , 'page', 'normal');
 		}
 		
 		// Create metabox contents depending on current configuration.
@@ -106,7 +106,7 @@ if (!class_exists("wpGenerator")) {
 			$fields = wpGenerator::getFields();
 			// Display appropriate form data
 			if( $fields == null) {
-				echo '<p>No custom fields added yet. Administrator is required to add a list of custom fields from the plugin\'s settings page.</p>';
+				echo '<p><big>No listing fields added yet. <a href="admin.php?page=mp-listing-fields">Add Listing fields here</a>. </big></p>';
 				return;
 			}
 			
@@ -118,32 +118,79 @@ if (!class_exists("wpGenerator")) {
 			$out .= '<table class="editform">';
 			
 			foreach( $fields as $title => $data ) {
-				$out .= wpGenerator::makeField( $title, $data[ 'default' ] );
+				$out .= wpGenerator::makeField( $title, $data[ 'default' ], $data['values'], $data['req'], $data['type'] );
 			}
 			
 			$out .= '</table>';
 			
-			$out .= '<p>You can add more listing fields at <a href="options-general.php?page=wp-generator">WP-Generator Settings page</a>.</p>';
+			$out .= '<p>You can add more listing fields at <a href="admin.php?page=mp-listing-fields">WP-Generator Settings page</a>.</p>';
 			//$out .= $bottom;
 			echo $out;
 		}
 		
 				// Returns input for the field.
-		function makeField( $name, $default ='' ) {
+		function makeField( $name, $default ='', $values='', $req=0, $type='text' ) {
 			$title = $name;
 			$name = 'msg_' . wpGenerator::sanitizeName( $name );
 			
 			// Get custom field if opened.
-			if( isset( $_REQUEST[ 'post' ] ) ) {
-			  $value = get_post_meta( $_REQUEST[ 'post' ], MSG_PREFIX. $title );
-			  $value = $value[ 0 ];
-			} elseif($default!='') {
-			  $value = $default;
-			}
+			//if( isset( $_REQUEST[ 'post' ] ) ) {
+			  $mvalue = get_post_meta( $_REQUEST[ 'post' ], MSG_PREFIX. $title );
+			  $mvalue = $mvalue[ 0 ];
+			//} elseif($default!='') {
+			//  $mvalue = $default;
+			//}
+			
+			if(empty($mvalue)){$mvalue = $default;};
+			
 			$out = '<tr>' .
 			  '<th scope="row">' . $title . ' </th>' .
-			  '<td> <input id="' . $name . '" name="' . $name . '" value="' . attribute_escape($value) . '" type="textfield" size="'.MSG_OPTIONS_TEXTSIZE.'" /></td>' .
-			  '</tr>';
+			  '<td>';
+
+			switch($type){
+				case 'text':
+					$out .= '<input id="' . $name . '" name="' . $name . '" value="' . attribute_escape($mvalue) . '" type="text" size="'.MSG_OPTIONS_TEXTSIZE.'" />';
+					break;
+				case 'dropdown'	:
+					$opts = explode(",", $values);
+					$out .= '<select id="' . $name . '" name="' . $name . '">';
+					
+					foreach($opts as $opt){
+						$out .= '<option name="'.$opt.'" value="'.$opt.'" ';
+						if($mvalue===$opt){ $out .= ' selected="selected"'; };
+						$out .= '>'.$opt.'</option>';
+					}
+					
+					$out .= '</select> (Selected: ' . $mvalue . ')';			
+					break;
+				case 'checkbox'	:
+					$out .='<input type="checkbox" name="'.$name.'" value="on" '.(($mvalue==on) ? ' checked="checked"': ''  ).' >';
+					break;
+				case 'radio':
+					$out .= '<fieldset>';
+					$opts = explode(",", $values);
+					$first = true;
+					foreach($opts as $opt){
+						$out .= ' <input type="radio" name="'.$name.'" value="'.$opt.'" ';
+						if($mvalue==$opt || ($mvalue=='' && $first)){ $out .= ' checked="checked"'; };
+						$out .= ' label="'.$opt.'" /> '. $opt;
+						$first = false;
+					}
+					$out .= '</fieldset>';
+					break;				
+				case 'price':
+					$out .=  $values. '<input id="' . $name . '" name="' . $name . '" value="' . attribute_escape($mvalue) . '" type="text" size="'.MSG_OPTIONS_TEXTSIZE.'" />';
+					break;			
+				case 'image';
+					$out .= '<input id="' . $name . '" name="' . $name . '" value="' . attribute_escape($mvalue) . '" type="text" size="'.MSG_OPTIONS_TEXTSIZE.'" />';
+					break;
+				default:
+					$out .= 'This field type not implemented yet.';
+			}
+			
+			if($req){ $out .= '<span class="required" style="color:#ff0000;">*required</span>'; };
+			
+			$out .= '</td></tr>';
 			return $out;
 		}
 		
@@ -176,6 +223,7 @@ if (!class_exists("wpGenerator")) {
 			  $title = MSG_PREFIX . $title;
 			  
 			  $meta_value = stripslashes(trim($_REQUEST[ "$name" ]));
+			  
 			  if( isset( $meta_value ) && !empty( $meta_value ) ) {
 				delete_post_meta( $id, $title );
 				add_post_meta( $id, $title, $meta_value );
@@ -183,6 +231,8 @@ if (!class_exists("wpGenerator")) {
 				delete_post_meta( $id, $title );
 			  }
 			}
+			
+			//return $id;
 		}
 		
 		function getFields(){
@@ -194,7 +244,7 @@ if (!class_exists("wpGenerator")) {
 			// Add results to the fields array.
 			while( $db_records = mysql_fetch_array( $db_process ) ) {
 				$fieldname = $db_records['name'];
-				$fields[$fieldname] = array( 'value' => $db_records['value'], 'default' => $db_records['default'], 'before'=> $db_records['before'], 'after'=>$db_records['after'] );
+				$fields[$fieldname] = array( 'type' => $db_records['type'], 'values' => $db_records['values'], 'default'=> $db_records['default'], 'req'=>$db_records['req'] );
 			}
 			// return them as an array			
 			return $fields;
@@ -246,7 +296,8 @@ if (!class_exists("wpGenerator")) {
 					mysql_query($sql_delete);
 				}
 				
-					$meta_value = wpGenerator::get_generator_field($post->ID, $msg_field['name']);
+				
+				$meta_value = wpGenerator::get_generator_field($post->ID, $msg_field['name']);
 					
 				  if(strlen($meta_value)!=0 || ($list_empty && $show_labels)){
 					if($meta_value==''){$meta_value="-";}
@@ -261,7 +312,6 @@ if (!class_exists("wpGenerator")) {
 						echo "<span class='$classname'>";
 					}					
 					
-					echo $msg_field['before'];
 					
 					if($show_labels){
 					
@@ -276,7 +326,21 @@ if (!class_exists("wpGenerator")) {
 							}	
 					}
 					
-					echo $meta_value . $msg_field['after'];	
+					
+					// TODO: Type specific format
+					
+					switch($msg_field['type']){
+						case 'checkbox':
+							if($meta_value=='on'){
+								echo "Yes";
+							} else {
+								echo "No";
+							}					
+							break;					
+						default:
+							echo $meta_value;
+					}
+					
 
 					if($style=='List'){
 						echo "</li>";
@@ -491,7 +555,7 @@ function remove( position ){
 		
 		poststr = 'position='+position+'&msg='+<?php echo MSG_MESSAGE_REMOVE; ?>+'&nocache = '+nocache;
 		
-		alert(poststr);
+		//alert(poststr);
 	
 	http.onreadystatechange = function insertReply() {
 									if (http.readyState == 4) {
@@ -550,7 +614,7 @@ function addField(){
 	curFieldNumber =curFieldNumber+1;
 	x = curFieldNumber;
 	x = curFieldNumber;
-	var fieldHtml = "<div id=\"recordsArray_"+x+"\"><div class='eHelp' align='left'><div style='float:right'><a onClick=\"saveField('"+x+"');\" style='text-decoration:none; cursor:pointer'>Save</a>&nbsp;|&nbsp;<a onClick=\"remove('"+x+"');\" style='text-decoration:none; cursor:pointer'>Remove</a>&nbsp;&nbsp;&nbsp;&nbsp;<a onclick=\"cfgShowHide('"+x+"')\" style=\"cursor:pointer;cursor:hand;\"><img src=\"<?php echo MSG_FULLPATH;?>/image/arr1.gif\" id=\"cfgimg_"+x+"\" align=\"absmiddle\" border=\"0\" alt=\"\" /></a></div><div style=\"color: #0066FF;font-weight:bold; font-size:12px\">Field&nbsp;<span style='font-size:10px; font-weight:normal; color:#666666; padding-top:4px;' ></span>&nbsp;&nbsp;<span style='font-size:10px; font-weight:normal; color:#CC0000; padding-top:4px;' id='"+x+"insert_response'> </span></div><div id=\"collsp_"+x+"\" style=\"margin-top:6px; border-top:1px solid #dddddd;\"><table><tr><td><b>Name:</b></td><td><input type='text' id='"+x+"_name' class='widefat' style=\"width:400px;\" value=\"\" ></td></tr><tr><td><b>Default value:</b></td><td><input type='text' name='"+x+"_default' class='widefat' style='width:400px;' id='"+x+"_default' value=\"\" ></td></tr><tr><td><b>Type:</b></td><td><select name=\""+x+"_type\" id=\""+x+"_type\"><option name=\"\" value=\"text\" >Text</option><option name=\"\" value=\"dropdown\" >Dropdown</option></select></td></tr>	  <tr><td><b>Values:</b></td><td><input type='text' name='"+x+"_values' class='widefat' style='width:400px;' id='"+x+"_values' value=\"\" ></td></tr><tr><td><b>Required:</b></td><td><input type='checkbox' name='"+x+"_required' id='"+x+"_required' value='' /></td></tr></table></div></div></div>";
+	var fieldHtml = "<div id=\"recordsArray_"+x+"\"><div class='eHelp' align='left'><div style='float:right'><a onClick=\"saveField('"+x+"');\" style='text-decoration:none; cursor:pointer'>Save</a>&nbsp;|&nbsp;<a onClick=\"remove('"+x+"');\" style='text-decoration:none; cursor:pointer'>Remove</a>&nbsp;&nbsp;&nbsp;&nbsp;<a onclick=\"cfgShowHide('"+x+"')\" style=\"cursor:pointer;cursor:hand;\"><img src=\"<?php echo MSG_FULLPATH;?>/image/arr1.gif\" id=\"cfgimg_"+x+"\" align=\"absmiddle\" border=\"0\" alt=\"\" /></a></div><div style=\"color: #0066FF;font-weight:bold; font-size:12px\">Field&nbsp;<span style='font-size:10px; font-weight:normal; color:#666666; padding-top:4px;' ></span>&nbsp;&nbsp;<span style='font-size:10px; font-weight:normal; color:#CC0000; padding-top:4px;' id='"+x+"insert_response'> </span></div><div id=\"collsp_"+x+"\" style=\"margin-top:6px; border-top:1px solid #dddddd;\"><table><tr><td><b>Name:</b></td><td><input type='text' id='"+x+"_name' class='widefat' style=\"width:400px;\" value=\"\" ></td></tr><tr><td><b>Default value:</b></td><td><input type='text' name='"+x+"_default' class='widefat' style='width:400px;' id='"+x+"_default' value=\"\" ></td></tr><tr><td><b>Type:</b></td><td><select name=\""+x+"_type\" id=\""+x+"_type\"><option name=\"\" value=\"text\" >Text</option><option name=\"\" value=\"dropdown\" >Dropdown</option><option name=\"\" value=\"checkbox\" >Checkbox</option><option name=\"\" value=\"radio\" >Radio</option><option name=\"\" value=\"Price\" >Price</option><option name=\"\" value=\"image\" >Image</option></select></td></tr>	  <tr><td><b>Values:</b></td><td><input type='text' name='"+x+"_values' class='widefat' style='width:400px;' id='"+x+"_values' value=\"\" ></td></tr><tr><td><b>Required:</b></td><td><input type='checkbox' name='"+x+"_required' id='"+x+"_required' value='1' /></td></tr></table></div></div></div>";
 	
 	html = html + fieldHtml; 
 	document.getElementById('stage').innerHTML = html;

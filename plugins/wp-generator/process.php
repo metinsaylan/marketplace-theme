@@ -43,18 +43,16 @@ $db_position = mysql_fetch_array($process);
 					 `flag` = '$flag'
 					 WHERE `position` = '$position' ";
 			mysql_query($sql);
-		    $result = $name;
-			$result .= ',';
-			$result .= $position;
-			echo  $result;
+			
+			echo  "Updated.";
 		}
 	} else {
 	  // INSERT
 	  $sql = "INSERT INTO ".MSG_CONTROLS." (`id`, `name`, `type`, `values`, `default`, `req`, `position`, `flag`, `ListingID`) VALUES (NULL, '$name', '$type', '$values', '$default', '$req', '$position', '$flag', '$max_value');";
 	  
-	  //$sql = "INSERT INTO ".MSG_CONTROLS." (`id`, `name`, `before`, `after`, `default`, `position`, `flag`, `ListingID`) VALUES (NULL, , '$before', '$after', '$default', '$position', '$flag', '$max_value');";
-	  
 		mysql_query($sql);
+		
+		echo  "Saved.";
 	}
 	
 ?>

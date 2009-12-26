@@ -1,11 +1,11 @@
 <?php
-$name = $_POST['name'];
 $position = $_POST['position'];
-$before = $_POST['before'];
-$after = $_POST['after'];
-$default = $_POST['default'];
-$msg = $_POST['msg'];
-$flag = $_POST['flag'];
+$name = urldecode($_POST['name']);
+$type = $_POST['type'];
+$values = urldecode($_POST['values']);
+$default = urldecode($_POST['default']);
+$req = $_POST['required'];
+$flag = 2; //$_POST['flag'];
 
-	print_r($name . " " . $position);
+	print_r($req);
 ?>
