@@ -156,12 +156,13 @@ if (!class_exists("wpGenerator")) {
 					$out .= '<select id="' . $name . '" name="' . $name . '">';
 					
 					foreach($opts as $opt){
+						$opt = trim($opt);
 						$out .= '<option name="'.$opt.'" value="'.$opt.'" ';
-						if($mvalue===$opt){ $out .= ' selected="selected"'; };
+						if($mvalue==$opt){ $out .= ' selected="selected"'; };
 						$out .= '>'.$opt.'</option>';
 					}
 					
-					$out .= '</select> (Selected: ' . $mvalue . ')';			
+					$out .= '</select>';			
 					break;
 				case 'checkbox'	:
 					$out .='<input type="checkbox" name="'.$name.'" value="on" '.(($mvalue==on) ? ' checked="checked"': ''  ).' >';
