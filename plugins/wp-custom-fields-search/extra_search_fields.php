@@ -386,12 +386,23 @@ class DropDownField extends Field {
 		$id = $this->getHTMLName($name);
 
 		$options = '';
+		$ctr = 0; //shailan: added for "ignore first element" support
+		
 		foreach($this->getOptions($joiner,$fieldName) as $option=>$label){
+			
 			$checked = ($option==$v)?" selected='true'":"";
-			$option = htmlspecialchars($option,ENT_QUOTES);
+			
+			if($ctr==0){
+				$option = '';
+				$ctr=1;
+			} else {
+				$option = htmlspecialchars($option,ENT_QUOTES);
+			}
+			
 			$label = htmlspecialchars($label,ENT_QUOTES);
 			$options.="<option value='$option'$checked>$label</option>";
 		}
+		
 		$atts = '';
 		if($this->params['onChange']) $atts = ' onChange="'.htmlspecialchars($this->params['onChange']).'"';
 		if($this->params['id']) $atts .= ' id="'.htmlspecialchars($this->params['id']).'"';
@@ -632,6 +643,7 @@ class CustomFieldJoiner extends BaseJoiner{
 		return $default;
 	}
 	function sql_restrict($name,$index,$value,$comparison){
+	
 		$table = 'meta'.$index;
 		$field = "$table.meta_value".($this->param('numeric',false)?'*1':'');
 		$comp = " AND ".$comparison->addSQLWhere($field,$value);
