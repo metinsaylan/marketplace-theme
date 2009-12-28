@@ -392,12 +392,12 @@ class DropDownField extends Field {
 			
 			$checked = ($option==$v)?" selected='true'":"";
 			
-			if($ctr==0){
-				$option = '';
-				$ctr=1;
-			} else {
+			if($ctr==0){ //shailan: added for "ignore first element" support
+				$option = ''; //shailan: added for "ignore first element" support
+				$ctr=1; //shailan: added for "ignore first element" support
+			} else { //shailan: added for "ignore first element" support
 				$option = htmlspecialchars($option,ENT_QUOTES);
-			}
+			} //shailan: added for "ignore first element" support
 			
 			$label = htmlspecialchars($label,ENT_QUOTES);
 			$options.="<option value='$option'$checked>$label</option>";

@@ -32,7 +32,7 @@ if( $_GET['connection'] == '1' ){ include_once('../../../../../wp-config.php'); 
 			<option name="" value="price" <?php if($rs['type']=='price'){ echo "selected"; } ?> >Price</option>
 		</select>
 	  </td></tr>
-	  <tr><td><b>Values:</b></td><td><input type='text' name='<?php echo $rs['position']; ?>_values' class='widefat' style='width:400px;' id='<?php echo $rs['position']; ?>_values' value="<?php echo htmlentities($rs['values'], ENT_QUOTES); ?>" ></td></tr>
+	  <tr><td><b>Values:</b></td><td><input type='text' name='<?php echo $rs['position']; ?>_values' class='widefat' style='width:400px;' id='<?php echo $rs['position']; ?>_values' value="<?php echo $rs['values']; ?>" ></td></tr>
 		<tr><td><b>Required:</b></td><td>
 			<input type='checkbox' name='<?php echo $rs['position']; ?>_required' id='<?php echo $rs['position']; ?>_required' value='1' <?php if($rs['req']=='1'){echo " checked='checked'";}; ?> />
 		</td></tr>
