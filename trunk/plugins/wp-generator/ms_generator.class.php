@@ -675,7 +675,7 @@ function updateListing(){
 </p>
 
 <p class="submit">
-<input type="submit" name="action" class="button-primary" value="<?php esc_attr_e('Save Changes'); ?>" /> <input type="submit" name="action" value="Re-install" />
+<input type="submit" name="action" class="button-primary" value="Save Changes" /> <input type="submit" name="action" value="Re-install" />
 </p>
 </form>
 <p>
