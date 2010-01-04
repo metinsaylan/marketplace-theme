@@ -23,7 +23,7 @@
  * Author URI: http://don-benjamin.co.uk
  * */
 
-$debugMode =true;
+$debugMode =false;
 
 if ( !defined('WP_CONTENT_URL') )
         define( 'WP_CONTENT_URL', get_option('siteurl') . '/wp-content');
@@ -398,7 +398,7 @@ class DropDownField extends Field {
                 if($this->params['onChange']) $atts = ' onChange="'.htmlspecialchars($this->params['onChange']).'"';
                 if($this->params['id']) $atts .= ' id="'.htmlspecialchars($this->params['id']).'"';
                 if($this->params['css_class']) $atts .= ' class="'.htmlspecialchars($this->params['css_class']).'"';
-                return "<select name='$id'$atts>$options</select> (name: $name joiner: )";
+                return "<select name='$id'$atts>$options</select>";
         }
         function getConfigForm($id,$values){
                 return "<label for='$id-dropdown-options'>".__('Drop Down Options','wp-custom-fields-search')."</label><input id='$id-dropdown-options' name='$id"."[dropdownoptions]' value='$values[dropdownoptions]'/>";
