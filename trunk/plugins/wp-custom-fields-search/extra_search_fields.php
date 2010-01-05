@@ -197,7 +197,7 @@ class DB_Search_Widget extends DB_WP_Widget {
                 add_filter('posts_groupby', array(&$this,'sql_group'));
                 add_filter('home_template',array(&$this,'rewriteHome'));
                 add_filter('page_template',array(&$this,'rewriteHome'));
-                add_filter( 'get_search_query', array(&$this,'getSearchDescription'));
+                add_filter('get_search_query', array(&$this,'getSearchDescription'));
                 add_action('wp_head', array(&$this,'outputStylesheets'), 1);
         }
         function loadTranslations(){
@@ -370,13 +370,17 @@ class DropDownField extends Field {
         }
 
         function getOptions($joiner,$name){
+		
+			$any_key = get_option('marketplace_anyKey');
+			$options = array(''=>__($any_key,'wp-custom-fields-search'));
+		
                 if($this->param('fromDb',!$this->options)){
-                        $options = array(''=>__('ANY','wp-custom-fields-search'));
                         $auto = $joiner->getAllOptions($name);
                         asort($auto);
                         $options +=$auto;
                         return $options;
                 } else {
+						// $options += $this->options; 
                         return $this->options;
                 }
         }
@@ -385,8 +389,6 @@ class DropDownField extends Field {
                 $v = $this->getValue($name);
                 $id = $this->getHTMLName($name);
 
-				//$checked = ($option=="")?" selected='true'":"";
-                //$options = "<option value=''$checked>Any</option>";
 				$options = '';
                 foreach($this->getOptions($joiner,$fieldName) as $option=>$label){
                         $checked = ($option==$v)?" selected='true'":"";
@@ -830,8 +832,13 @@ class CustomSearchField extends SearchFieldBase {
         function sql_restrict($where){
                 if($this->hasValue()){
                         $value = $this->getValue();
-                        $value = $GLOBALS['wpdb']->escape($value);
-                        $where.=$this->joiner->sql_restrict($this->name,$this->index,$value,$this->comparison);
+						
+						$any_key = get_option('marketplace_anyKey');
+						if($value == $any_key ){ return $where; exit; }
+						
+						$value = $GLOBALS['wpdb']->escape($value);
+						
+						$where.=$this->joiner->sql_restrict($this->name,$this->index,$value,$this->comparison);
                 }
                 if(method_exists($this->joiner,'process_where'))
                         $where = $this->joiner->process_where($where);
