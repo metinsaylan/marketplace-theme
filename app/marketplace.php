@@ -21,6 +21,7 @@ define('MSMP_VERSION', trim($shailanMP_theme_data['Version']));
 /* Define Options Hash */
 define('MSMP_OPTION_VERSION', 'shailanMP_version');
 define('MSMP_OPTION_LOGO', 'shailanMP_logo');
+define('MSMP_OPTION_ANYKEY', 'shailanMP_anykey');
 
 class marketplace{
 
@@ -39,9 +40,6 @@ class marketplace{
 		DB_CustomSearch_Widget::init();
 		wpGenerator::init();
 		
-			
-		// Register our scripts with script loader
-		//  marketplace::register_scripts();
 	}
 	
 	function print_styles(){ 
@@ -77,18 +75,22 @@ class marketplace{
 	function theme_options(){
 	// Read options 
 	$advertise_url_tag = 'marketplace_advertise_url';
+	$anykey_tag = 'marketplace_anyKey';
 	
 	// $style = get_option(MSMP_OPTION_STYLE);	
 	$logo = get_option(MSMP_OPTION_LOGO);
 	$advertise_url = get_option($advertise_url_tag);
+	$any_key = get_option($anykey_tag);
 	
 	if(wp_verify_nonce($_POST['_wpnonce'])){ // Form submitted. Save settings.
 		
 		$logo = $_POST[MSMP_OPTION_LOGO];
 		$advertise_url = $_POST[$advertise_url_tag];
+		$any_key = $_POST[$anykey_tag];
 		
 		update_option(MSMP_OPTION_LOGO, $logo); // TODO: Validate before saving
 		update_option($advertise_url_tag, $advertise_url);
+		update_option($anykey_tag, $any_key);
 		
 		//$style = $_POST[MSMP_OPTION_STYLE];
 		//update_option(MSMP_OPTION_STYLE, $style);
@@ -115,6 +117,10 @@ class marketplace{
 <th scope="row"><label for="style"><?php _e('Advertise URL', 'marketplace') ?></label></th>
 <td><input type="text" size="60" class="" name="<?php echo $advertise_url_tag; ?>" id="<?php echo $advertise_url_tag; ?>" value="<?php echo $advertise_url; ?>" /><br /> <span class="description"><?php _e('Enter URL for your advertiser contact page.', 'marketplace'); ?></span></td>
 </tr>	
+<tr valign="top">
+<th scope="row"><label for="style"><?php _e('Any key', 'marketplace') ?></label></th>
+<td><input type="text" size="60" class="" name="<?php echo $anykey_tag; ?>" id="<?php echo $anykey_tag; ?>" value="<?php echo $any_key; ?>" /><br /> <span class="description"><?php _e('Enter key for "any" in dropdown menus.', 'marketplace'); ?></span></td>
+</tr>
 </table>
 </div>
 <p class="submit">
